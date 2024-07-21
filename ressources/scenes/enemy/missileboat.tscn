@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4drf4gpl1o3q"]
+
+[ext_resource type="Script" path="res://src/tools/SimpleRigidbody2D.cs" id="1_udxru"]
+[ext_resource type="PackedScene" uid="uid://unrv33h86xxb" path="res://ressources/scenes/enemy/torpedo_launcher.tscn" id="2_nsrbn"]
+
+[node name="Missileboat" type="Node2D"]
+script = ExtResource("1_udxru")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(-23, -98)
+color = Color(0.142846, 0.324697, 0.156902, 1)
+polygon = PackedVector2Array(-87, -102, -188, -250, -189, -427, 170, -421, 184, -239, 85, -116, 92, 301, 239, 529, -144, 564, -38, 298)
+
+[node name="TorpedoLauncher" parent="." instance=ExtResource("2_nsrbn")]
+position = Vector2(-161, -108)
+rotation = -1.56728
+
+[node name="TorpedoLauncher2" parent="." instance=ExtResource("2_nsrbn")]
+position = Vector2(-177, -244)
+rotation = -1.5708
+
+[node name="TorpedoLauncher3" parent="." instance=ExtResource("2_nsrbn")]
+position = Vector2(146, 165)
+rotation = 1.5708
+
+[node name="TorpedoLauncher4" parent="." instance=ExtResource("2_nsrbn")]
+position = Vector2(124, 15)
+rotation = 1.5708
+
+[node name="TorpedoLauncher5" parent="." instance=ExtResource("2_nsrbn")]
+position = Vector2(109, -103)
+rotation = 1.5708
+
+[node name="TorpedoLauncher6" parent="." instance=ExtResource("2_nsrbn")]
+position = Vector2(88, -244)
+rotation = 1.5708
+
+[node name="TorpedoLauncher7" parent="." instance=ExtResource("2_nsrbn")]
+position = Vector2(-151, 209)
+rotation = -1.5708
+
+[node name="TorpedoLauncher8" parent="." instance=ExtResource("2_nsrbn")]
+position = Vector2(-155, 33)
+rotation = -1.5708

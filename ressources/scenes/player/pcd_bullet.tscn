@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bepyot52eytrr"]
+
+[ext_resource type="Script" path="res://src/Weapons/Projectile.cs" id="1_dh6ul"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_aegpp"]
+radius = 6.08276
+
+[node name="PCDBullet" type="Node2D"]
+script = ExtResource("1_dh6ul")
+LifeTime = 1.25
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 768
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_aegpp")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-5, -5, -5, 5, 5, 5, 5, -5)

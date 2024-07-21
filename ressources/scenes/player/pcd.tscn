@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://ckk5blb67ec45"]
+
+[ext_resource type="Script" path="res://src/Weapons/PCD.cs" id="1_o0fd8"]
+[ext_resource type="PackedScene" uid="uid://bepyot52eytrr" path="res://ressources/scenes/player/pcd_bullet.tscn" id="2_6imp7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gru22"]
+radius = 1000.0
+
+[node name="PCD" type="Node2D"]
+script = ExtResource("1_o0fd8")
+BulletSpeed = 1000.0
+spawnScene = ExtResource("2_6imp7")
+MaxReloadTime = 0.05
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 768
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+shape = SubResource("CircleShape2D_gru22")

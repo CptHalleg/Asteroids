@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://bn6mif7tod57y"]
+
+[ext_resource type="Script" path="res://src/player/Ship.cs" id="1_35evx"]
+[ext_resource type="PackedScene" uid="uid://ckk5blb67ec45" path="res://ressources/scenes/player/pcd.tscn" id="3_h4drx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c3nya"]
+size = Vector2(120, 120)
+
+[node name="Ship" type="Node2D"]
+script = ExtResource("1_35evx")
+RotationSpeed = 3.0
+BoostPower = 200.0
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_c3nya")
+
+[node name="PCD" parent="." instance=ExtResource("3_h4drx")]
+position = Vector2(-16, 0)
+rotation = -0.698132
+
+[node name="PCD2" parent="." instance=ExtResource("3_h4drx")]
+position = Vector2(16, 0)
+rotation = 0.698132
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+scale = Vector2(0.5, 0.5)
+invert_border = 0.1
+polygon = PackedVector2Array(0, -75, -60, 100, 0, 75, 60, 100)
