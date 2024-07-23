@@ -3,33 +3,28 @@ using System;
 
 public partial class Projectile : SimpleRigidbody2D
 {
-	private Timer timer;
-	[Export] public int piercing = 1;
-	[Export] public float LifeTime{get; private set;} = 2;
-	public override void _Ready()
+	protected TeamMarker teamMarker;
+	protected Timer despawnTimer;
+	public override void _EnterTree()
 	{
-		timer = new Timer();
-		AddChild(timer);
-		timer.WaitTime = LifeTime;
-		timer.Timeout += OnTimerTimeout;
-		timer.Start();
-		
-        GetChild<Area2D>(0).AreaEntered += OnCollision;
+        teamMarker = GetChild<TeamMarker>(0);
 	}
 
-    private void OnCollision(Area2D area)
-    {
-        area.GetParent().QueueFree();
-		piercing--;
-		if(piercing <= 0){
-			QueueFree();
-		}
-    }
+	public void Shoot(float lifeTime, Vector2 velocilty, bool PlayerTeam){
+		despawnTimer = new Timer();
+		AddChild(despawnTimer);
+		despawnTimer.WaitTime = lifeTime;
+		despawnTimer.Timeout += OnDespawnTimerTimeout;
+		despawnTimer.Start();
+
+		Velocity = velocilty;
+
+		teamMarker.PlayerTeam = PlayerTeam;
+	}
 
 
-    private void OnTimerTimeout()
+    protected virtual void OnDespawnTimerTimeout()
     {
         QueueFree();
     }
-
 }

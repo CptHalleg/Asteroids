@@ -1,0 +1,53 @@
+[gd_scene load_steps=9 format=3 uid="uid://ckk5blb67ec45"]
+
+[ext_resource type="Script" path="res://src/Weapons/TeamMarker.cs" id="1_5yuy5"]
+[ext_resource type="Script" path="res://src/Weapons/TargetPicker.cs" id="2_k5pvv"]
+[ext_resource type="Script" path="res://src/Weapons/TeamArea2D.cs" id="3_6wyol"]
+[ext_resource type="Script" path="res://src/Weapons/Turret.cs" id="3_oxnw7"]
+[ext_resource type="Script" path="res://src/Weapons/ProjectileSpawner.cs" id="4_3rres"]
+[ext_resource type="PackedScene" uid="uid://bepyot52eytrr" path="res://ressources/scenes/projectiles/pcd_bullet.tscn" id="5_oeaj8"]
+[ext_resource type="AudioStream" uid="uid://dw8pgyd1vex1h" path="res://ressources/sounds/movex.ogg" id="6_l0gt2"]
+[ext_resource type="Script" path="res://src/Weapons/Magazin.cs" id="6_xjn4c"]
+
+[node name="PCD" type="Node2D"]
+script = ExtResource("1_5yuy5")
+
+[node name="FireControl" type="Area2D" parent="."]
+visibility_layer = 2
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("2_k5pvv")
+MaxAngle = 1.6
+DisplayRange = true
+
+[node name="TeamArea2D" type="Node" parent="FireControl" node_paths=PackedStringArray("TeamMarker")]
+script = ExtResource("3_6wyol")
+MaskMissle = true
+TeamMarker = NodePath("../..")
+
+[node name="Turret" type="Node2D" parent="."]
+script = ExtResource("3_oxnw7")
+MaxAngle = 1.6
+
+[node name="Rotor" type="Node2D" parent="Turret"]
+
+[node name="Line2D" type="Line2D" parent="Turret/Rotor"]
+points = PackedVector2Array(0, 0, 0, -15)
+width = 3.0
+
+[node name="Barrel" type="Node2D" parent="Turret/Rotor" node_paths=PackedStringArray("TeamMarker")]
+position = Vector2(0, -15)
+script = ExtResource("4_3rres")
+ProjectileSpeed = 1000.0
+ProjectileLifeTime = 1.0
+TeamMarker = NodePath("../../..")
+spawnScene = ExtResource("5_oeaj8")
+WaitTime = 0.05
+SpawnAudioSteam = ExtResource("6_l0gt2")
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("6_xjn4c")
+
+[connection signal="TargetAcquired" from="FireControl" to="Turret/Rotor/Barrel" method="StartSpawning"]
+[connection signal="TargetChanged" from="FireControl" to="Turret" method="SetTarget"]
+[connection signal="TargetLost" from="FireControl" to="Turret/Rotor/Barrel" method="StopSpawning"]

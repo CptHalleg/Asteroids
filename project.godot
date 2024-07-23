@@ -15,6 +15,10 @@ run/main_scene="res://ressources/scenes/main.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://ressources/images/icon.svg"
 
+[autoload]
+
+AudioSystem="*res://src/tools/AudioSystem.cs"
+
 [display]
 
 window/vsync/vsync_mode=0

@@ -1,31 +1,82 @@
-[gd_scene load_steps=4 format=3 uid="uid://bn6mif7tod57y"]
+[gd_scene load_steps=10 format=3 uid="uid://bn6mif7tod57y"]
 
 [ext_resource type="Script" path="res://src/player/Ship.cs" id="1_35evx"]
-[ext_resource type="PackedScene" uid="uid://ckk5blb67ec45" path="res://ressources/scenes/player/pcd.tscn" id="3_h4drx"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_c3nya"]
-size = Vector2(120, 120)
+[ext_resource type="Script" path="res://src/Weapons/DamagableArea.cs" id="2_ocl1i"]
+[ext_resource type="PackedScene" uid="uid://ckk5blb67ec45" path="res://ressources/scenes/weapons/pcd.tscn" id="2_pmkmh"]
+[ext_resource type="PackedScene" uid="uid://unrv33h86xxb" path="res://ressources/scenes/weapons/torpedo_launcher.tscn" id="3_n41g5"]
+[ext_resource type="Script" path="res://ressources/scenes/player/Drive.cs" id="4_4e76r"]
+[ext_resource type="Script" path="res://ressources/scenes/player/CopyCollisionPolygon2D.cs" id="5_y5k4y"]
+[ext_resource type="AudioStream" uid="uid://cagmy5s2r7jj" path="res://ressources/sounds/ScatterNoise1.mp3" id="6_7o4dd"]
+[ext_resource type="Script" path="res://ressources/scenes/player/PlayerController.cs" id="6_u7i6q"]
+[ext_resource type="Script" path="res://src/Weapons/DamageDealer.cs" id="7_d7t5o"]
 
 [node name="Ship" type="Node2D"]
 script = ExtResource("1_35evx")
-RotationSpeed = 3.0
-BoostPower = 200.0
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_mask = 0
+script = ExtResource("2_ocl1i")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_c3nya")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" node_paths=PackedStringArray("Polygon2D")]
+script = ExtResource("5_y5k4y")
+Polygon2D = NodePath("../../Polygon2D")
 
-[node name="PCD" parent="." instance=ExtResource("3_h4drx")]
+[node name="PCD" parent="." instance=ExtResource("2_pmkmh")]
 position = Vector2(-16, 0)
-rotation = -0.698132
+rotation = -1.19787
+PlayerTeam = true
 
-[node name="PCD2" parent="." instance=ExtResource("3_h4drx")]
+[node name="PCD2" parent="." instance=ExtResource("2_pmkmh")]
 position = Vector2(16, 0)
-rotation = 0.698132
+rotation = 1.17688
+PlayerTeam = true
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 scale = Vector2(0.5, 0.5)
 invert_border = 0.1
-polygon = PackedVector2Array(0, -75, -60, 100, 0, 75, 60, 100)
+polygon = PackedVector2Array(0, -75, -25.7268, 0.0365295, -60, 100, 0, 75, 60, 100)
+
+[node name="Polygon2D2" type="Polygon2D" parent="."]
+position = Vector2(-16, 0)
+rotation = -1.22173
+polygon = PackedVector2Array(-5, -3, -2, -6, 2, -6, 5, -3, 5, 9, -5, 9)
+
+[node name="Polygon2D3" type="Polygon2D" parent="."]
+position = Vector2(16, 0)
+rotation = 1.22173
+polygon = PackedVector2Array(-5, -3, -2, -6, 2, -6, 5, -3, 5, 9, -5, 9)
+
+[node name="TorpedoLauncher" parent="." instance=ExtResource("3_n41g5")]
+position = Vector2(-50, 30)
+rotation = -1.5708
+PlayerTeam = true
+
+[node name="TorpedoLauncher2" parent="." instance=ExtResource("3_n41g5")]
+position = Vector2(50, 30)
+rotation = 1.5708
+PlayerTeam = true
+
+[node name="Drive" type="Node2D" parent="."]
+position = Vector2(0, 40)
+script = ExtResource("4_4e76r")
+ActiveSound = ExtResource("6_7o4dd")
+
+[node name="Polygon2D" type="Polygon2D" parent="Drive"]
+position = Vector2(0, 5)
+color = Color(0.825469, 0.121182, 0.602332, 1)
+polygon = PackedVector2Array(0, 0, -70, 70, 0, 300, 70, 70)
+
+[node name="Area2D" type="Area2D" parent="Drive"]
+collision_layer = 0
+collision_mask = 514
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Drive/Area2D" node_paths=PackedStringArray("Polygon2D")]
+script = ExtResource("5_y5k4y")
+Polygon2D = NodePath("../../Polygon2D")
+
+[node name="DamageDealer" type="Node" parent="Drive/Area2D"]
+script = ExtResource("7_d7t5o")
+
+[node name="PlayerController" type="Node" parent="."]
+script = ExtResource("6_u7i6q")
+RotationSpeed = 2.0

@@ -1,44 +1,100 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4drf4gpl1o3q"]
+[gd_scene load_steps=7 format=3 uid="uid://b1laxpbwrnmr7"]
 
-[ext_resource type="Script" path="res://src/tools/SimpleRigidbody2D.cs" id="1_udxru"]
-[ext_resource type="PackedScene" uid="uid://unrv33h86xxb" path="res://ressources/scenes/enemy/torpedo_launcher.tscn" id="2_nsrbn"]
+[ext_resource type="PackedScene" uid="uid://unrv33h86xxb" path="res://ressources/scenes/weapons/torpedo_launcher.tscn" id="1_kbi28"]
+[ext_resource type="Script" path="res://src/Weapons/DamagableArea.cs" id="2_n2j5r"]
+[ext_resource type="Script" path="res://ressources/scenes/player/CopyCollisionPolygon2D.cs" id="3_cacj4"]
+[ext_resource type="Script" path="res://src/Weapons/TeamMarker.cs" id="3_qomqw"]
+[ext_resource type="PackedScene" uid="uid://ckk5blb67ec45" path="res://ressources/scenes/weapons/pcd.tscn" id="4_7b53g"]
+[ext_resource type="Script" path="res://ressources/scenes/enemy/OffscreenMarker.cs" id="5_xetn8"]
 
-[node name="Missileboat" type="Node2D"]
-script = ExtResource("1_udxru")
+[node name="MissileBoat" type="Node2D"]
+
+[node name="TorpedoLauncher" parent="." instance=ExtResource("1_kbi28")]
+position = Vector2(-150, -200)
+rotation = -1.5708
+
+[node name="TorpedoLauncher2" parent="." instance=ExtResource("1_kbi28")]
+position = Vector2(-150, -100)
+rotation = -1.5708
+
+[node name="TorpedoLauncher3" parent="." instance=ExtResource("1_kbi28")]
+position = Vector2(-150, 100)
+rotation = -1.5708
+
+[node name="TorpedoLauncher4" parent="." instance=ExtResource("1_kbi28")]
+position = Vector2(-150, 200)
+rotation = -1.5708
+
+[node name="TorpedoLauncher5" parent="." instance=ExtResource("1_kbi28")]
+position = Vector2(150, -200)
+rotation = 1.5708
+
+[node name="TorpedoLauncher6" parent="." instance=ExtResource("1_kbi28")]
+position = Vector2(150, -100)
+rotation = 1.5708
+
+[node name="TorpedoLauncher7" parent="." instance=ExtResource("1_kbi28")]
+position = Vector2(150, 100)
+rotation = 1.5708
+
+[node name="TorpedoLauncher8" parent="." instance=ExtResource("1_kbi28")]
+position = Vector2(150, 200)
+rotation = 1.5708
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
-position = Vector2(-23, -98)
-color = Color(0.142846, 0.324697, 0.156902, 1)
-polygon = PackedVector2Array(-87, -102, -188, -250, -189, -427, 170, -421, 184, -239, 85, -116, 92, 301, 239, 529, -144, 564, -38, 298)
+color = Color(2.04556e-07, 0.251826, 0.00178223, 1)
+polygon = PackedVector2Array(-200, -650, 200, -650, 200, -350, 100, -250, 100, 250, 250, 550, -250, 550, -100, 250, -100, -250, -200, -350)
 
-[node name="TorpedoLauncher" parent="." instance=ExtResource("2_nsrbn")]
-position = Vector2(-161, -108)
-rotation = -1.56728
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 256
+collision_mask = 0
+script = ExtResource("2_n2j5r")
 
-[node name="TorpedoLauncher2" parent="." instance=ExtResource("2_nsrbn")]
-position = Vector2(-177, -244)
-rotation = -1.5708
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" node_paths=PackedStringArray("Polygon2D")]
+script = ExtResource("3_cacj4")
+Polygon2D = NodePath("../../Polygon2D")
 
-[node name="TorpedoLauncher3" parent="." instance=ExtResource("2_nsrbn")]
-position = Vector2(146, 165)
-rotation = 1.5708
+[node name="TeamMarker" type="Node2D" parent="."]
+script = ExtResource("3_qomqw")
 
-[node name="TorpedoLauncher4" parent="." instance=ExtResource("2_nsrbn")]
-position = Vector2(124, 15)
-rotation = 1.5708
+[node name="PCD" parent="." instance=ExtResource("4_7b53g")]
+position = Vector2(-250, -650)
+rotation = -0.785398
 
-[node name="TorpedoLauncher5" parent="." instance=ExtResource("2_nsrbn")]
-position = Vector2(109, -103)
-rotation = 1.5708
+[node name="FireControl" parent="PCD" index="0"]
+DisplayRange = false
 
-[node name="TorpedoLauncher6" parent="." instance=ExtResource("2_nsrbn")]
-position = Vector2(88, -244)
-rotation = 1.5708
+[node name="PCD2" parent="." instance=ExtResource("4_7b53g")]
+position = Vector2(250, -650)
+rotation = 0.785398
 
-[node name="TorpedoLauncher7" parent="." instance=ExtResource("2_nsrbn")]
-position = Vector2(-151, 209)
-rotation = -1.5708
+[node name="FireControl" parent="PCD2" index="0"]
+DisplayRange = false
 
-[node name="TorpedoLauncher8" parent="." instance=ExtResource("2_nsrbn")]
-position = Vector2(-155, 33)
-rotation = -1.5708
+[node name="PCD3" parent="." instance=ExtResource("4_7b53g")]
+position = Vector2(250, 550)
+rotation = -0.785398
+
+[node name="FireControl" parent="PCD3" index="0"]
+DisplayRange = false
+
+[node name="PCD4" parent="." instance=ExtResource("4_7b53g")]
+position = Vector2(-250, 550)
+rotation = 0.785398
+
+[node name="FireControl" parent="PCD4" index="0"]
+DisplayRange = false
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("5_xetn8")
+Zoom = 0.2
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Node2D"]
+visibility_layer = 2
+position = Vector2(-250, -650)
+rect = Rect2(0, 0, 500, 1200)
+
+[editable path="PCD"]
+[editable path="PCD2"]
+[editable path="PCD3"]
+[editable path="PCD4"]

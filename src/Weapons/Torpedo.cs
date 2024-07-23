@@ -1,52 +1,53 @@
 using Godot;
-using System;
-using System.ComponentModel;
 
 public partial class Torpedo : Projectile
 {
-	[Export] float Acceleration = 100;
-	[Export] public float TimeToArm{get; private set;} = 1;
-	public float VisualRotationSpeed = 0.05f;
-	public float VisualRotationSpeedMax = 10;
-	float Speed = 0;
+	[Export] public float VisualRotationSpeed = 0.05f;
+	[Export] public float VisualRotationSpeedMax = 10;
+	[Export] public double TimeToArm{get{return armTimer.WaitTime;} private set{armTimer.WaitTime = value;}}
+	public float Acceleration = 100;
 	public bool IsArmed  = false;
-	public SimpleRigidbody2D Target;
-	private Vector2 interceptPos;
-	private Timer timer;
+	public Node2D Target;
+	private Timer armTimer = new Timer();
 	private Node2D visuals;
+	[Export] private AudioStream destroyedAudioSteam;
+	[Export] private AudioStream explodedAudioSteam;
 
-    public override void _Ready()
+    public override void _EnterTree()
     {
-        GetChild<Area2D>(0).AreaEntered += OnCollision;
-		visuals = GetChild<Node2D>(1);
-		timer = new Timer();
-		timer.WaitTime = TimeToArm;
-		timer.Timeout += OnTimerTimeout;
-		AddChild(timer);
-		timer.Start();
+		base._EnterTree();
+		visuals = GetChild<Node2D>(2);
+		armTimer.OneShot = true;
+		armTimer.Timeout += OnArmTimerTimeout;
+		AddChild(armTimer);
+		armTimer.Start();
 	}
 
-    private void OnTimerTimeout()
+    private void OnArmTimerTimeout()
     {
         IsArmed = true;
-		Speed = Velocity.Length();
     }
 
-
-    private void OnCollision(Area2D area)
-    {
-        QueueFree();
-    }
+	public void Shoot(float lifeTime, Vector2 velocilty, Node2D target, bool playerTeam){
+		Shoot(lifeTime, velocilty, playerTeam);
+		Target = target;
+	}
 
     public override void _Process(double delta)
 	{
-		
-		visuals.Rotation += (float)delta * Mathf.Clamp(Speed * VisualRotationSpeed, 0, VisualRotationSpeedMax);
-		if(IsArmed){
-			Speed += Acceleration * (float)delta;
-			if(Target != null){
-				Velocity = (Target.GlobalPosition - GlobalPosition).Normalized() * Speed;
-			}
+		visuals.Rotation += (float)delta * Mathf.Clamp(Velocity.Length() * VisualRotationSpeed, 0, VisualRotationSpeedMax);
+
+		if(!IsArmed){
+			return;
 		}
+		
+		if(Target == null){
+			return;
+		}
+
+		if(!IsInstanceValid(Target)){
+			return;
+		}
+		Velocity = (Target.GlobalPosition - GlobalPosition).Normalized() * (Velocity.Length()+ (Acceleration * (float)delta));
 	}
 }

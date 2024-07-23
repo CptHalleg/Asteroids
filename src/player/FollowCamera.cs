@@ -9,6 +9,8 @@ public partial class FollowCamera : Camera2D
 
 	public override void _Process(double delta)
 	{
-		GlobalPosition = Following.GlobalPosition;
+		if(IsInstanceValid(Following)) {
+			GlobalPosition = Following.GlobalPosition;
+		}
 	}
 }
