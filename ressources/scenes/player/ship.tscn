@@ -26,10 +26,16 @@ position = Vector2(-16, 0)
 rotation = -1.19787
 PlayerTeam = true
 
+[node name="FireControl" parent="PCD" index="0"]
+DisplayRange = false
+
 [node name="PCD2" parent="." instance=ExtResource("2_pmkmh")]
 position = Vector2(16, 0)
 rotation = 1.17688
 PlayerTeam = true
+
+[node name="FireControl" parent="PCD2" index="0"]
+DisplayRange = false
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 scale = Vector2(0.5, 0.5)
@@ -80,3 +86,6 @@ script = ExtResource("7_d7t5o")
 [node name="PlayerController" type="Node" parent="."]
 script = ExtResource("6_u7i6q")
 RotationSpeed = 2.0
+
+[editable path="PCD"]
+[editable path="PCD2"]

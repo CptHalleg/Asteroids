@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ckk5blb67ec45"]
+[gd_scene load_steps=11 format=3 uid="uid://ckk5blb67ec45"]
 
 [ext_resource type="Script" path="res://src/Weapons/TeamMarker.cs" id="1_5yuy5"]
 [ext_resource type="Script" path="res://src/Weapons/TargetPicker.cs" id="2_k5pvv"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://bepyot52eytrr" path="res://ressources/scenes/projectiles/pcd_bullet.tscn" id="5_oeaj8"]
 [ext_resource type="AudioStream" uid="uid://dw8pgyd1vex1h" path="res://ressources/sounds/movex.ogg" id="6_l0gt2"]
 [ext_resource type="Script" path="res://src/Weapons/Magazin.cs" id="6_xjn4c"]
+[ext_resource type="Script" path="res://ressources/scenes/weapons/MagazinDisplay.cs" id="9_dedgx"]
+[ext_resource type="Script" path="res://src/Weapons/CooldownTimer.cs" id="9_snmk4"]
 
 [node name="PCD" type="Node2D"]
 script = ExtResource("1_5yuy5")
@@ -42,12 +44,25 @@ ProjectileSpeed = 1000.0
 ProjectileLifeTime = 1.0
 TeamMarker = NodePath("../../..")
 spawnScene = ExtResource("5_oeaj8")
-WaitTime = 0.05
 SpawnAudioSteam = ExtResource("6_l0gt2")
 
-[node name="Node" type="Node" parent="."]
+[node name="Magazin" type="Node2D" parent="."]
 script = ExtResource("6_xjn4c")
+MaxCapacity = 500
 
-[connection signal="TargetAcquired" from="FireControl" to="Turret/Rotor/Barrel" method="StartSpawning"]
+[node name="Label" type="Label" parent="Magazin"]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+script = ExtResource("9_dedgx")
+
+[node name="CooldownTimer" type="Node" parent="."]
+script = ExtResource("9_snmk4")
+Cooldown = 0.1
+
+[connection signal="TargetAcquired" from="FireControl" to="CooldownTimer" method="EnableAutouse"]
 [connection signal="TargetChanged" from="FireControl" to="Turret" method="SetTarget"]
-[connection signal="TargetLost" from="FireControl" to="Turret/Rotor/Barrel" method="StopSpawning"]
+[connection signal="TargetLost" from="FireControl" to="CooldownTimer" method="DisableAutouse"]
+[connection signal="UsedCapacity" from="Magazin" to="Turret/Rotor/Barrel" method="Spawn"]
+[connection signal="SuccesfullUse" from="CooldownTimer" to="Magazin" method="UseCapacity"]

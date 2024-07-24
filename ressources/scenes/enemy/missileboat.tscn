@@ -85,6 +85,32 @@ rotation = 0.785398
 [node name="FireControl" parent="PCD4" index="0"]
 DisplayRange = false
 
+[node name="PCD5" parent="." instance=ExtResource("4_7b53g")]
+position = Vector2(-100, 0)
+rotation = -1.5708
+
+[node name="FireControl" parent="PCD5" index="0"]
+DisplayRange = false
+
+[node name="TeamArea2D" parent="PCD5/FireControl" index="0" node_paths=PackedStringArray("TeamMarker")]
+TeamMarker = NodePath("../../../PCD4")
+
+[node name="Barrel" parent="PCD5/Turret/Rotor" index="1" node_paths=PackedStringArray("TeamMarker")]
+TeamMarker = NodePath("../../../../PCD4")
+
+[node name="PCD6" parent="." instance=ExtResource("4_7b53g")]
+position = Vector2(100, 0)
+rotation = 1.5708
+
+[node name="FireControl" parent="PCD6" index="0"]
+DisplayRange = false
+
+[node name="TeamArea2D" parent="PCD6/FireControl" index="0" node_paths=PackedStringArray("TeamMarker")]
+TeamMarker = NodePath("../../../PCD4")
+
+[node name="Barrel" parent="PCD6/Turret/Rotor" index="1" node_paths=PackedStringArray("TeamMarker")]
+TeamMarker = NodePath("../../../../PCD4")
+
 [node name="Node2D" type="Node2D" parent="."]
 script = ExtResource("5_xetn8")
 Zoom = 0.2
@@ -98,3 +124,5 @@ rect = Rect2(0, 0, 500, 1200)
 [editable path="PCD2"]
 [editable path="PCD3"]
 [editable path="PCD4"]
+[editable path="PCD5"]
+[editable path="PCD6"]

@@ -6,7 +6,6 @@ public partial class Magazin : Node
 	[Export] public int MaxCapacity = 10;
 	[Export] public float FullReloadTime = 1;
 	[Export] public float ReloadAmount = 10;
-	[Export] public bool UsableWhileFullReloading = false;
 	[Signal] public delegate void StartedFullRealoadEventHandler();
 	[Signal] public delegate void UsedCapacityEventHandler();
 	public int CurrentCount;
@@ -18,7 +17,7 @@ public partial class Magazin : Node
     }
 
 	public bool UseCapacity(){
-		if(IsReloading() && !UsableWhileFullReloading){
+		if(IsReloading()){
 			return false;
 		}
 
@@ -34,6 +33,7 @@ public partial class Magazin : Node
 
 	public void FullReload(){
 		EmitSignal(SignalName.StartedFullReaload);
+		CurrentCount = MaxCapacity;
 		ReloadFinishTime = Time.GetUnixTimeFromSystem() + FullReloadTime;
 	}
 
