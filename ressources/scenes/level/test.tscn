@@ -1,9 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://dpn6ty8sleodq"]
+[gd_scene load_steps=11 format=3 uid="uid://dpn6ty8sleodq"]
 
 [ext_resource type="Script" path="res://src/tools/World.cs" id="1_qwhr1"]
 [ext_resource type="PackedScene" uid="uid://bn6mif7tod57y" path="res://ressources/scenes/player/ship.tscn" id="3_pv6hl"]
-[ext_resource type="Script" path="res://src/player/FollowCamera.cs" id="4_wymft"]
-[ext_resource type="PackedScene" uid="uid://b1laxpbwrnmr7" path="res://ressources/scenes/enemy/MissileBoat.tscn" id="5_h8gs2"]
+[ext_resource type="Script" path="res://src/components/player/CameraZoom.cs" id="4_1cpyv"]
+[ext_resource type="Script" path="res://src/components/player/FollowCamera.cs" id="4_wymft"]
+[ext_resource type="Script" path="res://src/ui/FireingArcVisibilityToggle.cs" id="5_fhkn1"]
+[ext_resource type="PackedScene" uid="uid://b1laxpbwrnmr7" path="res://ressources/scenes/enemy/missile_boat.tscn" id="5_h8gs2"]
+[ext_resource type="Script" path="res://src/components/player/CameraVisibilityArea.cs" id="6_q86wn"]
+[ext_resource type="Script" path="res://src/components/spawner/Node2DSpawner.cs" id="7_tdrwm"]
+[ext_resource type="Script" path="res://src/components/LocationRandomizer.cs" id="8_8byaf"]
 
 [sub_resource type="Environment" id="Environment_47n8r"]
 background_mode = 3
@@ -24,14 +29,37 @@ environment = SubResource("Environment_47n8r")
 zoom = Vector2(0.5, 0.5)
 script = ExtResource("4_wymft")
 Following = NodePath("../Ship")
+MovementScale = 0.8
+
+[node name="CameraZoom" type="Node" parent="Camera2D"]
+script = ExtResource("4_1cpyv")
+
+[node name="FireingArcVisibilityToggle" type="Node" parent="Camera2D"]
+script = ExtResource("5_fhkn1")
+
+[node name="Area2D" type="Area2D" parent="Camera2D"]
+collision_layer = 16777216
+collision_mask = 0
+script = ExtResource("6_q86wn")
 
 [node name="MissileBoat" parent="." instance=ExtResource("5_h8gs2")]
-position = Vector2(-869, 740)
+position = Vector2(-4370, 2681)
 
 [node name="Camera2D2" type="Camera2D" parent="."]
 
-[node name="MissileBoat2" parent="." instance=ExtResource("5_h8gs2")]
-position = Vector2(3657, 374)
+[node name="EnemySpawner" type="Node2D" parent="."]
 
-[node name="MissileBoat3" parent="." instance=ExtResource("5_h8gs2")]
-position = Vector2(-3055, -2226)
+[node name="CooldownTimer" type="Timer" parent="EnemySpawner"]
+wait_time = 20.0
+autostart = true
+
+[node name="Spawner" type="Node2D" parent="EnemySpawner"]
+script = ExtResource("7_tdrwm")
+spawnScene = ExtResource("5_h8gs2")
+
+[node name="LocationRandomizer" type="Node" parent="EnemySpawner/Spawner"]
+script = ExtResource("8_8byaf")
+Radius = 10000.0
+
+[connection signal="timeout" from="EnemySpawner/CooldownTimer" to="EnemySpawner/Spawner/LocationRandomizer" method="Randomize"]
+[connection signal="Randomized" from="EnemySpawner/Spawner/LocationRandomizer" to="EnemySpawner/Spawner" method="Spawn"]

@@ -1,0 +1,140 @@
+[gd_scene load_steps=14 format=3 uid="uid://b1laxpbwrnmr7"]
+
+[ext_resource type="PackedScene" uid="uid://unrv33h86xxb" path="res://ressources/scenes/weapons/torpedo_launcher.tscn" id="1_kbi28"]
+[ext_resource type="Script" path="res://src/ship/Ship.cs" id="1_v6vp0"]
+[ext_resource type="Script" path="res://src/components/area/DamagableArea.cs" id="2_geo2v"]
+[ext_resource type="Script" path="res://src/components/area/CopyCollisionPolygon2D.cs" id="3_2hthc"]
+[ext_resource type="PackedScene" uid="uid://ckk5blb67ec45" path="res://ressources/scenes/weapons/pcd.tscn" id="4_7b53g"]
+[ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="4_vxru0"]
+[ext_resource type="Script" path="res://src/ui/OffscreenHintMarker.cs" id="6_88ybb"]
+[ext_resource type="PackedScene" uid="uid://beqnhbocee3lv" path="res://ressources/scenes/ui/offscreen_hint.tscn" id="8_kr3a5"]
+[ext_resource type="PackedScene" uid="uid://dafxveorbrw8j" path="res://ressources/scenes/components/drive.tscn" id="8_qke7v"]
+[ext_resource type="Script" path="res://src/components/ai/KeepDistanceAIBehavoir.cs" id="9_xlk72"]
+[ext_resource type="PackedScene" uid="uid://d0sjcjfxr01jh" path="res://ressources/scenes/components/gyroscope.tscn" id="10_2j2xg"]
+[ext_resource type="PackedScene" uid="uid://dutjvlpi7w06h" path="res://ressources/scenes/components/manouvering_thruster.tscn" id="11_nedv4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ol8fc"]
+size = Vector2(500, 1200)
+
+[node name="MissileBoat" type="Node2D"]
+script = ExtResource("1_v6vp0")
+MaxSpeed = 400.0
+
+[node name="TorpedoLauncher" parent="." instance=ExtResource("1_kbi28")]
+position = Vector2(-150, -200)
+rotation = -1.5708
+
+[node name="TorpedoLauncher2" parent="." instance=ExtResource("1_kbi28")]
+position = Vector2(-150, -100)
+rotation = -1.5708
+
+[node name="TorpedoLauncher3" parent="." instance=ExtResource("1_kbi28")]
+position = Vector2(-150, 100)
+rotation = -1.5708
+
+[node name="TorpedoLauncher4" parent="." instance=ExtResource("1_kbi28")]
+position = Vector2(-150, 200)
+rotation = -1.5708
+
+[node name="TorpedoLauncher5" parent="." instance=ExtResource("1_kbi28")]
+position = Vector2(150, -200)
+rotation = 1.5708
+
+[node name="TorpedoLauncher6" parent="." instance=ExtResource("1_kbi28")]
+position = Vector2(150, -100)
+rotation = 1.5708
+
+[node name="TorpedoLauncher7" parent="." instance=ExtResource("1_kbi28")]
+position = Vector2(150, 100)
+rotation = 1.5708
+
+[node name="TorpedoLauncher8" parent="." instance=ExtResource("1_kbi28")]
+position = Vector2(150, 200)
+rotation = 1.5708
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(2.04556e-07, 0.251826, 0.00178223, 1)
+polygon = PackedVector2Array(-200, -650, 200, -650, 200, -350, 100, -250, 100, 250, 250, 550, -250, 550, -100, 250, -100, -250, -200, -350)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 256
+collision_mask = 0
+script = ExtResource("2_geo2v")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" node_paths=PackedStringArray("Polygon2D")]
+script = ExtResource("3_2hthc")
+Polygon2D = NodePath("../../Polygon2D")
+
+[node name="TeamMarker" type="Node2D" parent="."]
+script = ExtResource("4_vxru0")
+
+[node name="PCD" parent="." instance=ExtResource("4_7b53g")]
+position = Vector2(-200, -650)
+rotation = -0.785398
+
+[node name="PCD2" parent="." instance=ExtResource("4_7b53g")]
+position = Vector2(200, -650)
+rotation = 0.785398
+
+[node name="PCD3" parent="." instance=ExtResource("4_7b53g")]
+position = Vector2(250, 550)
+rotation = 2.35619
+
+[node name="PCD4" parent="." instance=ExtResource("4_7b53g")]
+position = Vector2(-250, 550)
+rotation = -2.35619
+
+[node name="PCD5" parent="." instance=ExtResource("4_7b53g")]
+position = Vector2(-100, 0)
+rotation = -1.5708
+
+[node name="PCD6" parent="." instance=ExtResource("4_7b53g")]
+position = Vector2(100, 0)
+rotation = 1.5708
+
+[node name="OffscreenHintMarker" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16777216
+script = ExtResource("6_88ybb")
+Zoom = 0.2
+OffscreenHintScene = ExtResource("8_kr3a5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OffscreenHintMarker"]
+position = Vector2(0, -50)
+shape = SubResource("RectangleShape2D_ol8fc")
+
+[node name="Drive" parent="." instance=ExtResource("8_qke7v")]
+position = Vector2(-180, 550)
+BoostPower = 50.0
+
+[node name="Drive2" parent="." instance=ExtResource("8_qke7v")]
+position = Vector2(0, 550)
+BoostPower = 50.0
+
+[node name="Drive3" parent="." instance=ExtResource("8_qke7v")]
+position = Vector2(180, 550)
+BoostPower = 50.0
+
+[node name="AIBehavoir" type="Node" parent="."]
+script = ExtResource("9_xlk72")
+
+[node name="Gyroscope" parent="." instance=ExtResource("10_2j2xg")]
+RotationSpeed = 0.5
+
+[node name="ManouveringThruster" parent="." instance=ExtResource("11_nedv4")]
+position = Vector2(-213, -559)
+rotation = 1.5708
+PositiveRotationDirection = true
+
+[node name="ManouveringThruster2" parent="." instance=ExtResource("11_nedv4")]
+position = Vector2(219, -565)
+rotation = -1.5708
+
+[node name="ManouveringThruster3" parent="." instance=ExtResource("11_nedv4")]
+position = Vector2(-194, 429)
+rotation = 1.5708
+
+[node name="ManouveringThruster4" parent="." instance=ExtResource("11_nedv4")]
+position = Vector2(190, 432)
+rotation = -1.5708
+PositiveRotationDirection = true

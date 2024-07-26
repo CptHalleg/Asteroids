@@ -1,46 +1,46 @@
 [gd_scene load_steps=10 format=3 uid="uid://cf7dxqh23ewty"]
 
-[ext_resource type="Script" path="res://src/Weapons/Torpedo.cs" id="1_8td5s"]
-[ext_resource type="Script" path="res://src/Weapons/TeamArea2D.cs" id="2_qyy6w"]
-[ext_resource type="Script" path="res://src/Weapons/TeamPolygon2D.cs" id="3_dlhs5"]
-[ext_resource type="Script" path="res://src/Weapons/DamagableArea.cs" id="4_jkr46"]
-[ext_resource type="Script" path="res://src/Weapons/TeamMarker.cs" id="4_qcwum"]
+[ext_resource type="Script" path="res://src/objects/Torpedo.cs" id="1_lf6wa"]
+[ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="4_tdi0v"]
+[ext_resource type="Script" path="res://src/components/area/DamagableArea.cs" id="5_582ab"]
 [ext_resource type="AudioStream" uid="uid://btufe1rv0jf3a" path="res://ressources/sounds/beep.wav" id="5_ipk7f"]
-[ext_resource type="Script" path="res://src/Weapons/DamageDealer.cs" id="6_ajtlo"]
+[ext_resource type="Script" path="res://src/components/team/TeamArea2D.cs" id="6_a8eoa"]
 [ext_resource type="AudioStream" uid="uid://njv7b2xr7iaq" path="res://ressources/sounds/Hit 1.mp3" id="6_yo03u"]
+[ext_resource type="Script" path="res://src/components/area/DamageDealer.cs" id="7_3n27s"]
+[ext_resource type="Script" path="res://src/components/team/TeamPolygon2D.cs" id="8_rhdjm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lc86p"]
 radius = 20.0
 
 [node name="Torpedo" type="Node2D"]
-script = ExtResource("1_8td5s")
+script = ExtResource("1_lf6wa")
 destroyedAudioSteam = ExtResource("5_ipk7f")
 explodedAudioSteam = ExtResource("6_yo03u")
 
 [node name="TeamMarker" type="Node" parent="."]
-script = ExtResource("4_qcwum")
+script = ExtResource("4_tdi0v")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 0
-script = ExtResource("4_jkr46")
+script = ExtResource("5_582ab")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_lc86p")
 
 [node name="TeamArea2D" type="Node" parent="Area2D" node_paths=PackedStringArray("TeamMarker")]
-script = ExtResource("2_qyy6w")
+script = ExtResource("6_a8eoa")
 LayerMissle = true
 MaskShip = true
 TeamMarker = NodePath("../../TeamMarker")
 
 [node name="DamageDealer" type="Node" parent="Area2D"]
-script = ExtResource("6_ajtlo")
+script = ExtResource("7_3n27s")
 
 [node name="Polygon2D" type="Polygon2D" parent="." node_paths=PackedStringArray("TeamMarker")]
 color = Color(1, 0.345098, 0, 1)
 polygon = PackedVector2Array(0, -20, -17, 10, 17, 10)
-script = ExtResource("3_dlhs5")
+script = ExtResource("8_rhdjm")
 PlayerTeamColor = Color(0.359555, 0.58871, 0.972524, 1)
 EnemyTeamColor = Color(1, 0.345098, 0, 1)
 TeamMarker = NodePath("../TeamMarker")

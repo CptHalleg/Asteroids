@@ -1,0 +1,78 @@
+[gd_scene load_steps=5 format=3 uid="uid://bf625fq0km4hv"]
+
+[ext_resource type="Script" path="res://src/ui/UI3DOverlay.cs" id="1_h0lcn"]
+[ext_resource type="Script" path="res://src/ui/FPSDisplay.cs" id="3_noua2"]
+[ext_resource type="Script" path="res://src/ui/PlayerShipStatusUI.cs" id="4_lvsxm"]
+[ext_resource type="PackedScene" uid="uid://da3e560mw8r8e" path="res://ressources/scenes/ui/magazin_label.tscn" id="5_lewgr"]
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="3DUIOverlay" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h0lcn")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 20.0
+offset_right = 71.0
+offset_bottom = 43.0
+scale = Vector2(2.51003, 1.75862)
+text = "FPS: "
+script = ExtResource("3_noua2")
+
+[node name="GameoverLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -821.0
+offset_top = -204.5
+offset_right = 821.0
+offset_bottom = 204.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.958895, 0.20078, 0, 1)
+theme_override_font_sizes/font_size = 300
+text = "GAMEOVER"
+
+[node name="PlayerShipStatusUI" type="Control" parent="." node_paths=PackedStringArray("MagazinLabelParent")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_lvsxm")
+MagazinLabelScene = ExtResource("5_lewgr")
+MagazinLabelParent = NodePath("MarginContainer/VBoxContainer")
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayerShipStatusUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerShipStatusUI/MarginContainer"]
+layout_mode = 2

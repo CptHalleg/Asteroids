@@ -1,18 +1,18 @@
 [gd_scene load_steps=6 format=3 uid="uid://bepyot52eytrr"]
 
-[ext_resource type="Script" path="res://src/Weapons/Projectile.cs" id="1_y02ha"]
-[ext_resource type="Script" path="res://src/Weapons/TeamArea2D.cs" id="2_advdu"]
-[ext_resource type="Script" path="res://src/Weapons/TeamMarker.cs" id="2_o25qk"]
-[ext_resource type="Script" path="res://src/Weapons/DamageDealer.cs" id="3_vld1e"]
+[ext_resource type="Script" path="res://src/objects/Projectile.cs" id="1_m7ojy"]
+[ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="2_s06w1"]
+[ext_resource type="Script" path="res://src/components/team/TeamArea2D.cs" id="3_gw1h4"]
+[ext_resource type="Script" path="res://src/components/area/DamageDealer.cs" id="4_1s1wo"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_aegpp"]
 radius = 6.08276
 
 [node name="PCDBullet" type="Node2D"]
-script = ExtResource("1_y02ha")
+script = ExtResource("1_m7ojy")
 
 [node name="TeamMarker" type="Node" parent="."]
-script = ExtResource("2_o25qk")
+script = ExtResource("2_s06w1")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0
@@ -22,12 +22,14 @@ collision_mask = 0
 shape = SubResource("CircleShape2D_aegpp")
 
 [node name="TeamArea2D" type="Node" parent="Area2D" node_paths=PackedStringArray("TeamMarker")]
-script = ExtResource("2_advdu")
+script = ExtResource("3_gw1h4")
 MaskMissle = true
 TeamMarker = NodePath("../../TeamMarker")
 
 [node name="DamageDealer" type="Node" parent="Area2D"]
-script = ExtResource("3_vld1e")
+script = ExtResource("4_1s1wo")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-5, -5, -5, 5, 5, 5, 5, -5)
+
+[connection signal="area_entered" from="Area2D" to="." method="queue_free" unbinds=1]

@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://2upjphuqt4ut"]
+[gd_scene load_steps=7 format=3 uid="uid://2upjphuqt4ut"]
 
 [ext_resource type="PackedScene" uid="uid://dpn6ty8sleodq" path="res://ressources/scenes/level/test.tscn" id="1_eglo8"]
 [ext_resource type="Shader" path="res://src/shaders/test.gdshader" id="2_ur5bj"]
 [ext_resource type="Texture2D" uid="uid://bkhd4v74fhsqr" path="res://test.png" id="3_6ic8t"]
-[ext_resource type="Script" path="res://ressources/scenes/FPSDisplay.cs" id="4_khxn5"]
-[ext_resource type="Script" path="res://ressources/scenes/SubviewportManager.cs" id="4_l8anl"]
-[ext_resource type="PackedScene" uid="uid://beqnhbocee3lv" path="res://ressources/scenes/ui/OffscreenHint.tscn" id="5_kv70j"]
+[ext_resource type="PackedScene" uid="uid://bf625fq0km4hv" path="res://ressources/scenes/ui/ui.tscn" id="4_cyir7"]
+[ext_resource type="AudioStream" uid="uid://drahdl3grdmbu" path="res://ressources/sounds/An Icy Blanket (1080p_25fps_H264-128kbit_AAC).mp3" id="5_y5yqo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_07opv"]
 shader = ExtResource("2_ur5bj")
@@ -26,58 +25,24 @@ grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+scroll_ignore_camera_zoom = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_mirroring = Vector2(10000, 10000)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+rotation = 0.785398
+scale = Vector2(1.5, 1.5)
 texture = ExtResource("3_6ic8t")
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 layer = 0
 
-[node name="UI" type="Control" parent="CanvasLayer2"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="UI" parent="CanvasLayer2" instance=ExtResource("4_cyir7")]
 
-[node name="SubviewportManager" type="Control" parent="CanvasLayer2/UI"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("4_l8anl")
-packedScene = ExtResource("5_kv70j")
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_y5yqo")
+volume_db = -10.0
+autoplay = true
 
-[node name="Label" type="Label" parent="CanvasLayer2/UI"]
-layout_mode = 0
-offset_left = 31.0
-offset_top = 20.0
-offset_right = 71.0
-offset_bottom = 43.0
-scale = Vector2(2.51003, 1.75862)
-text = "FPS: "
-script = ExtResource("4_khxn5")
-
-[node name="GameoverLabel" type="Label" parent="CanvasLayer2/UI"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -821.0
-offset_top = -204.5
-offset_right = 821.0
-offset_bottom = 204.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.958895, 0.20078, 0, 1)
-theme_override_font_sizes/font_size = 300
-text = "GAMEOVER"
+[connection signal="finished" from="AudioStreamPlayer2D" to="AudioStreamPlayer2D" method="play" binds= [0.0]]

@@ -15,26 +15,63 @@ public partial class AudioSystem : Node
         Instance = this;
     }
 
-	public static void Play(AudioStream audio, float Volume, int MaxActive){
-		if(!Instance.PlayingAudioSteams.ContainsKey(audio)){
-			Instance.PlayingAudioSteams.Add(audio,0);
+	public static bool HasCapacity(AudioStream stream, int maxConcurrent){
+		if(!Instance.PlayingAudioSteams.ContainsKey(stream)){
+			Instance.PlayingAudioSteams.Add(stream,0);
 		}
 
-		if(Instance.PlayingAudioSteams[audio] > MaxActive){
-			return;
+		if(Instance.PlayingAudioSteams[stream] > maxConcurrent){
+			return false;
 		}
-		Instance.PlayingAudioSteams[audio]++;
-
-		AudioStreamPlayer audioStreamPlayer = new AudioStreamPlayer();
-		audioStreamPlayer.Stream = audio;
-		audioStreamPlayer.VolumeDb = Volume;
-		audioStreamPlayer.Finished += () =>{ audioStreamPlayer.QueueFree(); Instance.PlayingAudioSteams[audio]--;};
-		Instance.AddChild(audioStreamPlayer);
-		audioStreamPlayer.Play();
+		Instance.PlayingAudioSteams[stream]++;
+		return true;
 	}
 
-    public static void Loop(AudioStream audio, float volume, object source)
+	public static AudioStreamPlayer InitAudioSteamPlayer(AudioSystemStream audio){
+		AudioStreamPlayer audioStreamPlayer = new AudioStreamPlayer();
+		audioStreamPlayer.Stream = audio.AudioStream;
+		audioStreamPlayer.VolumeDb = audio.Volume;
+		Instance.AddChild(audioStreamPlayer);
+		audioStreamPlayer.Play();
+		return audioStreamPlayer;
+	}
+
+	public static void CleanupAudioSteamPlayer(AudioStreamPlayer audioStreamPlayer){
+		audioStreamPlayer.Stop();
+		audioStreamPlayer.QueueFree();
+		Instance.PlayingAudioSteams[audioStreamPlayer.Stream]--;
+		if(Instance.PlayingAudioSteams[audioStreamPlayer.Stream] <= 0){
+			Instance.PlayingAudioSteams.Remove(audioStreamPlayer.Stream);
+		}
+	}
+
+	public static void Play(AudioSystemStream audio){
+
+		if(audio == null || audio.AudioStream == null){
+			return;
+		}
+
+		if(!HasCapacity(audio.AudioStream, audio.MaxConcurrent)){
+			return;
+		}
+
+		AudioStreamPlayer audioStreamPlayer = InitAudioSteamPlayer(audio);
+		audioStreamPlayer.Finished += () =>
+		{
+			CleanupAudioSteamPlayer(audioStreamPlayer);
+		};
+	}
+
+    public static void Loop(AudioSystemStream audio, object source)
     {
+		if(audio == null || audio.AudioStream == null || source == null){
+			return;
+		}
+
+		if(!HasCapacity(audio.AudioStream, audio.MaxConcurrent)){
+			return;
+		}
+
 		Dictionary<AudioStream, AudioStreamPlayer> sourceSounds;
         if(!Instance.loopingAudioSteams.ContainsKey(source)){
 			sourceSounds = new Dictionary<AudioStream, AudioStreamPlayer> ();
@@ -43,41 +80,40 @@ public partial class AudioSystem : Node
 			sourceSounds = Instance.loopingAudioSteams[source];
 		} 
 
-		if(sourceSounds.ContainsKey(audio)){
+		if(sourceSounds.ContainsKey(audio.AudioStream)){
 			return;
 		}
 
-		Debug.WriteLine("starting loop adio");
-
-		AudioStreamPlayer audioStreamPlayer = new AudioStreamPlayer();
-		sourceSounds.Add(audio,audioStreamPlayer);
-		audioStreamPlayer.Stream = audio;
-		audioStreamPlayer.VolumeDb = volume;
+		AudioStreamPlayer audioStreamPlayer = InitAudioSteamPlayer(audio);
 		audioStreamPlayer.Finished += () => audioStreamPlayer.Play();
-		Instance.AddChild(audioStreamPlayer);
-		audioStreamPlayer.Play();
+		sourceSounds.Add(audio.AudioStream,audioStreamPlayer);
     }
 
-	 public static void StopLoop(AudioStream audio, object source)
+	public static void StopLoop(AudioSystemStream audio, object source)
     {
+
+		if(audio == null || audio.AudioStream == null || source == null){
+			return;
+		}
+
         if(!Instance.loopingAudioSteams.ContainsKey(source)){
 			return;
 		}
 
 		Dictionary<AudioStream, AudioStreamPlayer> sourceSounds = Instance.loopingAudioSteams[source];
 
-		if(!sourceSounds.ContainsKey(audio)){
+		if(!sourceSounds.ContainsKey(audio.AudioStream)){
 			return;
 		}
 
-		AudioStreamPlayer audioStreamPlayer = sourceSounds[audio];
+		AudioStreamPlayer audioStreamPlayer = sourceSounds[audio.AudioStream];
 		if(audioStreamPlayer == null){
 			return;
 		}
 
-		audioStreamPlayer.Stop();
-		audioStreamPlayer.QueueFree();
-		sourceSounds.Remove(audio);
+		CleanupAudioSteamPlayer(audioStreamPlayer);
+		sourceSounds.Remove(audio.AudioStream);
+
 		if(sourceSounds.Count <= 0){
 			Instance.loopingAudioSteams.Remove(source);
 		}
@@ -92,8 +128,7 @@ public partial class AudioSystem : Node
 		Dictionary<AudioStream, AudioStreamPlayer> sourceSounds = Instance.loopingAudioSteams[source];
 
 		foreach(AudioStreamPlayer audioStreamPlayer in sourceSounds.Values){
-			audioStreamPlayer.Stop();
-			audioStreamPlayer.QueueFree();
+			CleanupAudioSteamPlayer(audioStreamPlayer);
 		}
 
 		Instance.loopingAudioSteams.Remove(source);
