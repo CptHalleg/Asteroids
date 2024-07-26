@@ -10,6 +10,7 @@ public partial class OffscreenHintMarker : Area2D
     private int currentViewingCams;
     private bool firstFrame = false;
     private OffscreenHint offscreenHint;
+    private bool hitAddedAsChild = false;
 
     public async override void _Ready()
 	{
@@ -21,15 +22,17 @@ public partial class OffscreenHintMarker : Area2D
         //idk why i have tp wait twice
         await ToSignal( GetTree(),SceneTree.SignalName.PhysicsFrame); 
         await ToSignal( GetTree(),SceneTree.SignalName.PhysicsFrame); 
-        if(currentViewingCams == 0){
+        if(currentViewingCams == 0 && !hitAddedAsChild){
             UI3DOverlay.Instance.AddChild(offscreenHint);
+            hitAddedAsChild = true;
         }
     }
 
     private void OnScreenEntered(Area2D area2D)
     {
-        if(currentViewingCams == 0){
+        if(currentViewingCams == 0 && hitAddedAsChild){
             UI3DOverlay.Instance.RemoveChild(offscreenHint);
+            hitAddedAsChild = false;
         }
         currentViewingCams++;
 
@@ -38,8 +41,9 @@ public partial class OffscreenHintMarker : Area2D
 
     private void OnScreenExited(Area2D area2D)
     {
-        if(currentViewingCams == 1){
+        if(currentViewingCams == 1 && !hitAddedAsChild){
             UI3DOverlay.Instance.AddChild(offscreenHint);
+            hitAddedAsChild = true;
         }
         currentViewingCams--;
     }

@@ -138,3 +138,5 @@ rotation = 1.5708
 position = Vector2(190, 432)
 rotation = -1.5708
 PositiveRotationDirection = true
+
+[connection signal="Damageed" from="Area2D" to="." method="Damaged"]

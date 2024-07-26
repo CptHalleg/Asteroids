@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dpn6ty8sleodq"]
+[gd_scene load_steps=14 format=3 uid="uid://dpn6ty8sleodq"]
 
 [ext_resource type="Script" path="res://src/tools/World.cs" id="1_qwhr1"]
 [ext_resource type="PackedScene" uid="uid://bn6mif7tod57y" path="res://ressources/scenes/player/ship.tscn" id="3_pv6hl"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" path="res://src/components/player/CameraVisibilityArea.cs" id="6_q86wn"]
 [ext_resource type="Script" path="res://src/components/spawner/Node2DSpawner.cs" id="7_tdrwm"]
 [ext_resource type="Script" path="res://src/components/LocationRandomizer.cs" id="8_8byaf"]
+[ext_resource type="AudioStream" uid="uid://btufe1rv0jf3a" path="res://ressources/sounds/beep.wav" id="9_8ut21"]
+[ext_resource type="Script" path="res://src/tools/AudioSystemStream.cs" id="10_jbk2g"]
 
 [sub_resource type="Environment" id="Environment_47n8r"]
 background_mode = 3
@@ -16,6 +18,12 @@ tonemap_white = 6.05
 glow_enabled = true
 glow_intensity = 2.32
 glow_bloom = 1.0
+
+[sub_resource type="Resource" id="Resource_eygvd"]
+script = ExtResource("10_jbk2g")
+AudioStream = ExtResource("9_8ut21")
+Volume = 0.0
+MaxConcurrent = 3
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_qwhr1")
@@ -56,6 +64,7 @@ autostart = true
 [node name="Spawner" type="Node2D" parent="EnemySpawner"]
 script = ExtResource("7_tdrwm")
 spawnScene = ExtResource("5_h8gs2")
+SpawnAudioSteam = SubResource("Resource_eygvd")
 
 [node name="LocationRandomizer" type="Node" parent="EnemySpawner/Spawner"]
 script = ExtResource("8_8byaf")

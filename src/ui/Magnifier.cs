@@ -12,7 +12,7 @@ public partial class Magnifier : Control
 
 	public override void _Process(double delta)
 	{
-		Visible = GetViewport().GetCamera2D().Zoom.Length() < 0.1f;
+		Visible = GetViewport().GetCamera2D().Zoom.Length() < 0.2f;
 		
 		GlobalPosition = GetViewport().CanvasTransform * attached.GlobalPosition;
 		Rotation = attached.GlobalRotation;

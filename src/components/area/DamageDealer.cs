@@ -5,6 +5,7 @@ using System.Diagnostics;
 [GlobalClass]
 public partial class DamageDealer : Node
 {
+    [Signal] public delegate void DealtDamageEventHandler(DamagableArea damagableArea);
 	private Area2D area2D;
 
     public override void _Ready()
@@ -20,6 +21,7 @@ public partial class DamageDealer : Node
 		}
 
 		damagableArea.Damage(this);
+        EmitSignal(SignalName.DealtDamage, damagableArea);
 	}
 
 }

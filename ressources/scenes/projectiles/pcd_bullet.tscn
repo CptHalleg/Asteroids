@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bepyot52eytrr"]
+[gd_scene load_steps=7 format=3 uid="uid://bepyot52eytrr"]
 
 [ext_resource type="Script" path="res://src/objects/Projectile.cs" id="1_m7ojy"]
 [ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="2_s06w1"]
 [ext_resource type="Script" path="res://src/components/team/TeamArea2D.cs" id="3_gw1h4"]
 [ext_resource type="Script" path="res://src/components/area/DamageDealer.cs" id="4_1s1wo"]
+[ext_resource type="Script" path="res://src/components/SelfDestructor.cs" id="5_47o6a"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_aegpp"]
 radius = 6.08276
@@ -32,4 +33,8 @@ script = ExtResource("4_1s1wo")
 [node name="Polygon2D" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-5, -5, -5, 5, 5, 5, 5, -5)
 
+[node name="SelfDestructor" type="Node" parent="."]
+script = ExtResource("5_47o6a")
+
 [connection signal="area_entered" from="Area2D" to="." method="queue_free" unbinds=1]
+[connection signal="DealtDamage" from="Area2D/DamageDealer" to="SelfDestructor" method="SelfDestruct" unbinds=1]
