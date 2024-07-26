@@ -1,26 +1,54 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 
 public static partial class TargetList
 {
-	public static Dictionary<Team,Dictionary<Type,List<TeamMarker>>> targets;
+	private static Dictionary<Team,Dictionary<TargetType,HashSet<Targetable>>> targets = new Dictionary<Team,Dictionary<TargetType,HashSet<Targetable>>>();
+    public static IReadOnlyCollection<Targetable> GetTargets(Team team, TargetType type)
+    {
+		if(!targets.ContainsKey(team)){
+			return new HashSet<Targetable>();
+		}
 
-	
+		if(!targets[team].ContainsKey(type)){
+			return new HashSet<Targetable>();
+		}
+        return targets[team][type];
+    }
 
-	public enum Team{
-		Player,Enemy, None
+	public static bool AddTargetable(Targetable targetable){
+		if(!targets.ContainsKey(targetable.Team)){
+			targets.Add(targetable.Team, new Dictionary<TargetType, HashSet<Targetable>>());
+		}
+
+		if(!targets[targetable.Team].ContainsKey(targetable.Type)){
+			targets[targetable.Team].Add(targetable.Type, new HashSet<Targetable>());
+		}
+
+		return targets[targetable.Team][targetable.Type].Add(targetable);
 	}
 
-	public enum Type{
-		Ship, Missle, Bullet
+	public static bool RemoveTargetable(Targetable targetable){
+
+		return targets[targetable.Team][targetable.Type].Remove(targetable);
 	}
-	public static Team Opposition(this Team team){
+
+		public static Team Opposition(this Team team){
 		switch(team){
 			case Team.Player: return Team.Enemy;
 			case Team.Enemy: return Team.Player;
 		}
 		return team;
 	}
+}
+
+public enum Team{
+	Player,Enemy, None
+}
+
+public enum TargetType{
+	Ship, Missle, Bullet
 }

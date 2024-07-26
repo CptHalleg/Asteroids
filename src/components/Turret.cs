@@ -46,7 +46,7 @@ public partial class Turret : Node2D
 		
 		//Vector2 directionToTarget = QuickMafs.CalculateLeadDirection(GlobalPosition, BulletSpeed, Target.GlobalPosition, targetVelicity);
 
-		if(!fireingArc.ContainsAngle(directionToTarget)){
+		if(!fireingArc.InAngleDirection(directionToTarget)){
 			return;
 		}
 

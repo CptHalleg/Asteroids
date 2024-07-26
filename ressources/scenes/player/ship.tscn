@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bn6mif7tod57y"]
+[gd_scene load_steps=14 format=3 uid="uid://bn6mif7tod57y"]
 
 [ext_resource type="Script" path="res://src/ship/Ship.cs" id="1_w0xa7"]
 [ext_resource type="PackedScene" uid="uid://ckk5blb67ec45" path="res://ressources/scenes/weapons/pcd.tscn" id="2_pmkmh"]
@@ -11,13 +11,16 @@
 [ext_resource type="Script" path="res://src/ui/OutlineLine2D.cs" id="9_iw3j8"]
 [ext_resource type="Script" path="res://src/ui/MagnifierMarker.cs" id="10_h3rqu"]
 [ext_resource type="PackedScene" uid="uid://b6lme253mg4wq" path="res://ressources/scenes/ui/magnifier.tscn" id="11_mspqw"]
+[ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="12_eavvu"]
+[ext_resource type="Script" path="res://src/components/team/Targetable.cs" id="13_6wsn1"]
 
 [node name="Ship" type="Node2D"]
 script = ExtResource("1_w0xa7")
 
-[node name="Hitbox" type="Area2D" parent="."]
+[node name="Hitbox" type="Area2D" parent="." node_paths=PackedStringArray("TeamMarker")]
 collision_mask = 0
 script = ExtResource("2_vgc6j")
+TeamMarker = NodePath("../TeamMarker")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox" node_paths=PackedStringArray("Polygon2D")]
 script = ExtResource("3_ageut")
@@ -26,12 +29,10 @@ Polygon2D = NodePath("../../Polygon2D")
 [node name="PCD" parent="." instance=ExtResource("2_pmkmh")]
 position = Vector2(-16, 0)
 rotation = -1.19787
-PlayerTeam = true
 
 [node name="PCD2" parent="." instance=ExtResource("2_pmkmh")]
 position = Vector2(16, 0)
 rotation = 1.17688
-PlayerTeam = true
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 invert_border = 0.1
@@ -50,12 +51,10 @@ polygon = PackedVector2Array(-5, -3, -2, -6, 2, -6, 5, -3, 5, 9, -5, 9)
 [node name="TorpedoLauncher" parent="." instance=ExtResource("3_n41g5")]
 position = Vector2(-50, 30)
 rotation = -0.785398
-PlayerTeam = true
 
 [node name="TorpedoLauncher2" parent="." instance=ExtResource("3_n41g5")]
 position = Vector2(50, 30)
 rotation = 0.785398
-PlayerTeam = true
 
 [node name="Drive" parent="." instance=ExtResource("6_0hhx0")]
 BoostPower = 300.0
@@ -74,3 +73,10 @@ script = ExtResource("9_iw3j8")
 script = ExtResource("10_h3rqu")
 magnifierScene = ExtResource("11_mspqw")
 Polygon2D = NodePath("../Polygon2D")
+
+[node name="TeamMarker" type="Node" parent="."]
+script = ExtResource("12_eavvu")
+
+[node name="Targetable" type="Node2D" parent="." node_paths=PackedStringArray("TeamMarker")]
+script = ExtResource("13_6wsn1")
+TeamMarker = NodePath("../TeamMarker")

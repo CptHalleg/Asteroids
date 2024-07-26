@@ -1,8 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://unrv33h86xxb"]
+[gd_scene load_steps=11 format=3 uid="uid://unrv33h86xxb"]
 
 [ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="1_08o7h"]
 [ext_resource type="Script" path="res://src/components/area/TargetPicker.cs" id="2_qroyw"]
-[ext_resource type="Script" path="res://src/components/team/TeamArea2D.cs" id="3_uheha"]
 [ext_resource type="PackedScene" uid="uid://cf7dxqh23ewty" path="res://ressources/scenes/projectiles/torpedo.tscn" id="4_41xxs"]
 [ext_resource type="Script" path="res://src/components/spawner/TorpedoSpawner.cs" id="4_wj40k"]
 [ext_resource type="Script" path="res://src/components/magazin/Magazin.cs" id="6_xp3lv"]
@@ -15,16 +14,10 @@
 [node name="TorpedoLauncher" type="Node2D"]
 script = ExtResource("1_08o7h")
 
-[node name="TargetPicker" type="Area2D" parent="." node_paths=PackedStringArray("FireingArc")]
-collision_layer = 0
-collision_mask = 0
+[node name="TargetPicker" type="Node2D" parent="." node_paths=PackedStringArray("FireingArc", "TeamMarker")]
 script = ExtResource("2_qroyw")
 FireingArc = NodePath("../FireingArc")
-
-[node name="TeamArea2D" type="Node" parent="TargetPicker" node_paths=PackedStringArray("TeamMarker")]
-script = ExtResource("3_uheha")
-MaskShip = true
-TeamMarker = NodePath("../..")
+TeamMarker = NodePath("..")
 
 [node name="TorpedoSpawner" type="Node2D" parent="." node_paths=PackedStringArray("TeamMarker")]
 script = ExtResource("4_wj40k")

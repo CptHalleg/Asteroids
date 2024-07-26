@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/objects/Projectile.cs" id="1_m7ojy"]
 [ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="2_s06w1"]
-[ext_resource type="Script" path="res://src/components/team/TeamArea2D.cs" id="3_gw1h4"]
+[ext_resource type="Script" path="res://src/components/area/DamagableArea.cs" id="3_32amq"]
 [ext_resource type="Script" path="res://src/components/area/DamageDealer.cs" id="4_1s1wo"]
 [ext_resource type="Script" path="res://src/components/SelfDestructor.cs" id="5_47o6a"]
 
@@ -18,14 +18,10 @@ script = ExtResource("2_s06w1")
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 0
+script = ExtResource("3_32amq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_aegpp")
-
-[node name="TeamArea2D" type="Node" parent="Area2D" node_paths=PackedStringArray("TeamMarker")]
-script = ExtResource("3_gw1h4")
-MaskMissle = true
-TeamMarker = NodePath("../../TeamMarker")
 
 [node name="DamageDealer" type="Node" parent="Area2D"]
 script = ExtResource("4_1s1wo")

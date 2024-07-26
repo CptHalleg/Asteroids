@@ -21,7 +21,7 @@ public partial class ProjectileSpawner : SimpleRigidbody2DSpawner
 		spawn.Velocity += direction;
 		spawn.despawnTimer.WaitTime = ProjectileLifeTime;
 		spawn.despawnTimer.Start();
-		spawn.TeamMarker.PlayerTeam = TeamMarker.PlayerTeam;
+		spawn.TeamMarker.Team = TeamMarker.Team;
 		return spawn;
     }
 

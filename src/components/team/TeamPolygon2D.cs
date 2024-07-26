@@ -10,14 +10,14 @@ public partial class TeamPolygon2D : Polygon2D
 
     public override void _EnterTree()
     {
-		UpdateColor(TeamMarker.PlayerTeam);
+		UpdateColor(TeamMarker.Team);
 		TeamMarker.TeamChanged += UpdateColor;
     }
 
-	public void UpdateColor(bool team){
-		if(team){
+	public void UpdateColor(Team team){
+		if(team == Team.Player){
 			Color = PlayerTeamColor;
-		}else{
+		}else if(team == Team.Enemy){
 			Color = EnemyTeamColor;
 		}
 	}

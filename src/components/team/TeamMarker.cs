@@ -4,15 +4,15 @@ using System;
 [GlobalClass]
 public partial class TeamMarker : Node
 {
-	[Signal] public delegate void TeamChangedEventHandler(bool newTeam);
-	private bool _playerTeam;
-	[Export] public bool PlayerTeam{ 
+	[Signal] public delegate void TeamChangedEventHandler(Team newTeam);
+	private Team _team;
+	[Export] public Team Team{ 
 		get{
-			return _playerTeam;
+			return _team;
 		} 
 		set{
-			EmitSignal(SignalName.TeamChanged, value);
-			_playerTeam = value;
+			EmitSignal(SignalName.TeamChanged, (int) value);
+			_team = value;
 		}
 	}
 }

@@ -1,8 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://ckk5blb67ec45"]
+[gd_scene load_steps=15 format=3 uid="uid://ckk5blb67ec45"]
 
 [ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="1_ayqvf"]
 [ext_resource type="Script" path="res://src/components/area/TargetPicker.cs" id="2_ed4nc"]
-[ext_resource type="Script" path="res://src/components/team/TeamArea2D.cs" id="3_qbhrg"]
 [ext_resource type="Script" path="res://src/components/Turret.cs" id="4_71o6a"]
 [ext_resource type="Script" path="res://src/components/spawner/ProjectileSpawner.cs" id="5_hmw6p"]
 [ext_resource type="PackedScene" uid="uid://bepyot52eytrr" path="res://ressources/scenes/projectiles/pcd_bullet.tscn" id="5_oeaj8"]
@@ -24,17 +23,12 @@ MaxConcurrent = 3
 [node name="PCD" type="Node2D"]
 script = ExtResource("1_ayqvf")
 
-[node name="FireControl" type="Area2D" parent="." node_paths=PackedStringArray("FireingArc")]
+[node name="TargetPicker" type="Node2D" parent="." node_paths=PackedStringArray("FireingArc", "TeamMarker")]
 visibility_layer = 2
-collision_layer = 0
-collision_mask = 0
 script = ExtResource("2_ed4nc")
 FireingArc = NodePath("../FireingArc")
-
-[node name="TeamArea2D" type="Node" parent="FireControl" node_paths=PackedStringArray("TeamMarker")]
-script = ExtResource("3_qbhrg")
-MaskMissle = true
-TeamMarker = NodePath("../..")
+TeamMarker = NodePath("..")
+Type = 1
 
 [node name="Turret" type="Node2D" parent="." node_paths=PackedStringArray("fireingArc")]
 script = ExtResource("4_71o6a")
@@ -79,8 +73,8 @@ MaxAngle = 1.5
 [node name="FireingArcVisualizer" type="Node2D" parent="FireingArc"]
 script = ExtResource("14_kqn8q")
 
-[connection signal="TargetAcquired" from="FireControl" to="CooldownTimer" method="EnableAutouse"]
-[connection signal="TargetChanged" from="FireControl" to="Turret" method="SetTarget"]
-[connection signal="TargetLost" from="FireControl" to="CooldownTimer" method="DisableAutouse"]
+[connection signal="TargetAcquired" from="TargetPicker" to="CooldownTimer" method="EnableAutouse"]
+[connection signal="TargetChanged" from="TargetPicker" to="Turret" method="SetTarget"]
+[connection signal="TargetLost" from="TargetPicker" to="CooldownTimer" method="DisableAutouse"]
 [connection signal="ConsumedCapacity" from="Magazin" to="Turret/Rotor/Barrel" method="Spawn"]
 [connection signal="StartedCooldown" from="CooldownTimer" to="Magazin" method="ConsumeCapacity"]

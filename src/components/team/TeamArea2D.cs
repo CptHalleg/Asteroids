@@ -3,9 +3,8 @@ using System;
 using System.Diagnostics;
 
 [GlobalClass]
-public partial class TeamArea2D : Node
+public partial class TeamArea2D : Area2D
 {
-	private Area2D area2D;
 	[Export] public bool LayerShip;
 	[Export] public bool LayerMissle;
 	[Export] public bool LayerBullet;
@@ -20,33 +19,38 @@ public partial class TeamArea2D : Node
 
     public override void _EnterTree()
     {
-		area2D = GetParent<Area2D>();
-        UpdateColor(TeamMarker.PlayerTeam);
+		DebugTools.IsSet(TeamMarker, this);
+        UpdateColor(TeamMarker.Team);
 		TeamMarker.TeamChanged += UpdateColor;
     }
 
-    public void UpdateColor(bool team){
+    public void UpdateColor(Team team){
 		int offset;
-		if(team){
+		if(team == Team.Player){
 			offset = 0;
-		}else{
+		}else if(team == Team.Enemy){
 			offset = 8;
+		}else{
+			offset = 16;
 		}
 		
-		area2D.CollisionLayer = 0;
-		area2D.SetCollisionLayerValue(1 + offset, LayerShip);
-		area2D.SetCollisionLayerValue(2 + offset, LayerMissle);
-		area2D.SetCollisionLayerValue(3 + offset, LayerBullet);
+		CollisionLayer = 0;
+		SetCollisionLayerValue(1 + offset, LayerShip);
+		SetCollisionLayerValue(2 + offset, LayerMissle);
+		SetCollisionLayerValue(3 + offset, LayerBullet);
 		
-		if(!team){
+		if(team == Team.Player){
+			offset = 8;
+		}else if(team == Team.Enemy){
 			offset = 0;
 		}else{
-			offset = 8;
+			offset = 16;
 		}
 		
-		area2D.CollisionMask = 0;
-		area2D.SetCollisionMaskValue(1 + offset, MaskShip);
-		area2D.SetCollisionMaskValue(2 + offset, MaskMissle);
-		area2D.SetCollisionMaskValue(3 + offset, MaskBullet);
+		
+		CollisionMask = 0;
+		SetCollisionMaskValue(1 + offset, MaskShip);
+		SetCollisionMaskValue(2 + offset, MaskMissle);
+		SetCollisionMaskValue(3 + offset, MaskBullet);
 	}
 }
