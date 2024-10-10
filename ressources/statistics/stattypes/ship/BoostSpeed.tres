@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="AddAttributeStatType" load_steps=2 format=3 uid="uid://diaj2p458xolp"]
+
+[ext_resource type="Script" path="res://src/character/stats/stattypes/AddAttributeStatType.cs" id="1_o4twe"]
+
+[resource]
+script = ExtResource("1_o4twe")
+Name = "BoostSpeed"

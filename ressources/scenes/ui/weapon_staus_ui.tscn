@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://bbj3aql5vr81a"]
+
+[ext_resource type="Script" path="res://src/ui/player_status/WeaponStatusUI.cs" id="1_dlj3c"]
+[ext_resource type="Script" path="res://src/ui/player_status/MagazinStatusUI.cs" id="2_op0fw"]
+[ext_resource type="Script" path="res://src/ui/player_status/EffectDisplayUI.cs" id="2_ygplk"]
+[ext_resource type="PackedScene" uid="uid://bh14hadgfa2r7" path="res://ressources/scenes/ui/pdc_bullet_icon.tscn" id="3_ux5f0"]
+[ext_resource type="Resource" uid="uid://dfv5cm6c6gxdn" path="res://ressources/statistics/stattypes/weapons/CurrentBulletCount.tres" id="4_3qv7f"]
+
+[node name="WeaponStatusUI" type="VBoxContainer" node_paths=PackedStringArray("effectDisplayUI", "nameDisplay")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_dlj3c")
+effectDisplayUI = NodePath("RichTextLabel")
+nameDisplay = NodePath("Label")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 2
+fit_content = true
+script = ExtResource("2_ygplk")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "adadad"
+
+[node name="HFlowContainer" type="HFlowContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("2_op0fw")
+bulletScene = ExtResource("3_ux5f0")
+currentBulletCountStatType = ExtResource("4_3qv7f")

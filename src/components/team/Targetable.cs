@@ -13,4 +13,9 @@ public partial class Targetable : Node2D
 		DebugTools.IsSet(TeamMarker, this);
 		TargetList.AddTargetable(this);
 	}
+
+    public override void _ExitTree()
+    {
+		TargetList.RemoveTargetable(this);
+    }
 }

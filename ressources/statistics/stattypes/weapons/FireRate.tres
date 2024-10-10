@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="AddAttributeStatType" load_steps=2 format=3 uid="uid://dbfjqb3lhqohm"]
+
+[ext_resource type="Script" path="res://src/character/stats/stattypes/AddAttributeStatType.cs" id="1_70ssa"]
+
+[resource]
+script = ExtResource("1_70ssa")
+Name = "FireRate"

@@ -1,39 +1,30 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 public partial class Ship : SimpleRigidbody2D
 {
 	[Export] public float MaxSpeed = 0;
-	public bool Doomed{get; private set;}
-	private Timer doomTimer;
 	public bool ControlBoosting;
 	public int ControlRotating;
+	private List<WeaponHardpoint> weaponHardpoints = new List<WeaponHardpoint>();
+	private List<DriveHardpoint> driveHardpoints = new List<DriveHardpoint>();
+	private List<RotationHardpoint> rotationHardpoints = new List<RotationHardpoint>();
+	public TeamMarker TeamMarker{get; private set;}
+	public Character Character{get; private set;}
 
-	public void Doom(){
-		if(Doomed){
-			return;
-		}
-		Doomed = true;
-		doomTimer.Start();
-	}
-
-    public override void _Ready()
+    public override void _EnterTree()
     {
-        doomTimer = new Timer();
-		AddChild(doomTimer);
-		doomTimer.WaitTime = 10;
-		doomTimer.OneShot = true;
-		doomTimer.Timeout += DoomTimeout;
+        DebugTools.IsChildType(typeof(TeamMarker), 0, this);
+		TeamMarker = GetChild<TeamMarker>(0);
+        DebugTools.IsChildType(typeof(Character), 1, this);
+		Character = GetChild<Character>(1);
+		InitHardPoints();
     }
 
-    private void DoomTimeout()
-    {
-       QueueFree();
-    }
-
-	public void Damaged(DamageDealer damageDealer){
-		Doom();
+    public void Damaged(DamageDealer damageDealer){
+		QueueFree();
 	}
 
     public override void _PhysicsProcess(double delta)
@@ -52,5 +43,30 @@ public partial class Ship : SimpleRigidbody2D
 			fireForRoatation = true;
 		}
 		return fireForRoatation;
+	}
+
+    internal void InitHardPoints()
+    {
+		foreach(Node node in GetChildren()){
+			if(node is WeaponHardpoint weaponHardpoint){
+				weaponHardpoints.Add(weaponHardpoint);
+			}
+		}
+
+		foreach(Node node in GetChildren()){
+			if(node is DriveHardpoint driveHardpoint){
+				driveHardpoints.Add(driveHardpoint);
+			}
+		}
+
+		foreach(Node node in GetChildren()){
+			if(node is RotationHardpoint rotationHardpoint){
+				rotationHardpoints.Add(rotationHardpoint);
+			}
+		}
+    }
+
+	public IReadOnlyCollection<WeaponHardpoint> GetHardpoints(){
+		return weaponHardpoints;
 	}
 }

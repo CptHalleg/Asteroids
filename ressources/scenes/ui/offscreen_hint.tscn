@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/ui/OffscreenHint.cs" id="1_k8d6q"]
 [ext_resource type="Script" path="res://src/ui/MySubViewport.cs" id="2_tt5m6"]
-[ext_resource type="Script" path="res://src/components/player/FollowCamera.cs" id="3_yn0dx"]
+[ext_resource type="Script" path="res://src/player/FollowCamera.cs" id="3_yn0dx"]
 
 [node name="OffscreenHint" type="Control"]
 layout_mode = 3

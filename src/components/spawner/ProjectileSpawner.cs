@@ -9,27 +9,12 @@ public partial class ProjectileSpawner : SimpleRigidbody2DSpawner
     [Export] public float Inaccuracy { get; private set; } = 0.05f;
 	[Export] public TeamMarker TeamMarker;
 	protected RandomNumberGenerator random = new RandomNumberGenerator();
-
-	
-	
     protected override Node InstanciateNewNode()
     {
 		Projectile spawn = (Projectile) base.InstanciateNewNode();
-
-		Vector2 direction = GlobalTransform.BasisXform(Vector2.Up) * ProjectileSpeed;
+		Vector2 direction = GlobalTransform.BasisXform(Vector2.Right) * ProjectileSpeed;
 		direction = direction.Rotated(random.RandfRange(-Inaccuracy, Inaccuracy));
-		spawn.Velocity += direction;
-		spawn.despawnTimer.WaitTime = ProjectileLifeTime;
-		spawn.despawnTimer.Start();
-		spawn.TeamMarker.Team = TeamMarker.Team;
+		spawn.Init(direction, ProjectileLifeTime, TeamMarker.Team);
 		return spawn;
-    }
-
-    public void OnSpawned(Node node)
-    {
-        /*Projectile projectile = (Projectile) node;
-		
-		AudioSystem.Play(SpawnAudioSteam, -30,1);
-		EmitSignal(SignalName.Spawned, projectile);*/
     }
 }

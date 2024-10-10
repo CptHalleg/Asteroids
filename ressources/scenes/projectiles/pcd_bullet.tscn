@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://bepyot52eytrr"]
 
-[ext_resource type="Script" path="res://src/objects/Projectile.cs" id="1_m7ojy"]
-[ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="2_s06w1"]
-[ext_resource type="Script" path="res://src/components/area/DamagableArea.cs" id="3_32amq"]
-[ext_resource type="Script" path="res://src/components/area/DamageDealer.cs" id="4_1s1wo"]
+[ext_resource type="Script" path="res://src/ship/weapon/projectiles/Projectile.cs" id="1_m7ojy"]
+[ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="2_tcd0d"]
+[ext_resource type="Script" path="res://src/components/area/DamagableArea.cs" id="3_p1346"]
+[ext_resource type="Script" path="res://src/components/area/DamageDealer.cs" id="4_6k4qp"]
 [ext_resource type="Script" path="res://src/components/SelfDestructor.cs" id="5_47o6a"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_aegpp"]
@@ -13,18 +13,20 @@ radius = 6.08276
 script = ExtResource("1_m7ojy")
 
 [node name="TeamMarker" type="Node" parent="."]
-script = ExtResource("2_s06w1")
+script = ExtResource("2_tcd0d")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("TeamMarker")]
 collision_layer = 0
 collision_mask = 0
-script = ExtResource("3_32amq")
+script = ExtResource("3_p1346")
+MaskMissle = true
+TeamMarker = NodePath("../TeamMarker")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_aegpp")
 
 [node name="DamageDealer" type="Node" parent="Area2D"]
-script = ExtResource("4_1s1wo")
+script = ExtResource("4_6k4qp")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-5, -5, -5, 5, 5, 5, 5, -5)
@@ -32,5 +34,4 @@ polygon = PackedVector2Array(-5, -5, -5, 5, 5, 5, 5, -5)
 [node name="SelfDestructor" type="Node" parent="."]
 script = ExtResource("5_47o6a")
 
-[connection signal="area_entered" from="Area2D" to="." method="queue_free" unbinds=1]
 [connection signal="DealtDamage" from="Area2D/DamageDealer" to="SelfDestructor" method="SelfDestruct" unbinds=1]

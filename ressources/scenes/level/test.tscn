@@ -1,16 +1,16 @@
 [gd_scene load_steps=14 format=3 uid="uid://dpn6ty8sleodq"]
 
-[ext_resource type="Script" path="res://src/tools/World.cs" id="1_qwhr1"]
+[ext_resource type="Script" path="res://src/tree_positions/World.cs" id="1_qwhr1"]
 [ext_resource type="PackedScene" uid="uid://bn6mif7tod57y" path="res://ressources/scenes/player/ship.tscn" id="3_pv6hl"]
-[ext_resource type="Script" path="res://src/components/player/CameraZoom.cs" id="4_1cpyv"]
-[ext_resource type="Script" path="res://src/components/player/FollowCamera.cs" id="4_wymft"]
+[ext_resource type="Script" path="res://src/player/CameraZoom.cs" id="4_1cpyv"]
+[ext_resource type="Script" path="res://src/player/FollowCamera.cs" id="4_wymft"]
 [ext_resource type="Script" path="res://src/ui/FireingArcVisibilityToggle.cs" id="5_fhkn1"]
 [ext_resource type="PackedScene" uid="uid://b1laxpbwrnmr7" path="res://ressources/scenes/enemy/missile_boat.tscn" id="5_h8gs2"]
-[ext_resource type="Script" path="res://src/components/player/CameraVisibilityArea.cs" id="6_q86wn"]
+[ext_resource type="Script" path="res://src/player/CameraVisibilityArea.cs" id="6_q86wn"]
 [ext_resource type="Script" path="res://src/components/spawner/Node2DSpawner.cs" id="7_tdrwm"]
 [ext_resource type="Script" path="res://src/components/LocationRandomizer.cs" id="8_8byaf"]
 [ext_resource type="AudioStream" uid="uid://btufe1rv0jf3a" path="res://ressources/sounds/beep.wav" id="9_8ut21"]
-[ext_resource type="Script" path="res://src/tools/AudioSystemStream.cs" id="10_jbk2g"]
+[ext_resource type="Script" path="res://src/audio/AudioSystemStream.cs" id="10_jbk2g"]
 
 [sub_resource type="Environment" id="Environment_47n8r"]
 background_mode = 3

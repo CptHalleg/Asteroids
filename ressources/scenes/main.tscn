@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://2upjphuqt4ut"]
+[gd_scene load_steps=6 format=3 uid="uid://2upjphuqt4ut"]
 
 [ext_resource type="PackedScene" uid="uid://dpn6ty8sleodq" path="res://ressources/scenes/level/test.tscn" id="1_eglo8"]
 [ext_resource type="Shader" path="res://src/shaders/test.gdshader" id="2_ur5bj"]
 [ext_resource type="Texture2D" uid="uid://bkhd4v74fhsqr" path="res://test.png" id="3_6ic8t"]
 [ext_resource type="PackedScene" uid="uid://bf625fq0km4hv" path="res://ressources/scenes/ui/ui.tscn" id="4_cyir7"]
-[ext_resource type="AudioStream" uid="uid://drahdl3grdmbu" path="res://ressources/sounds/An Icy Blanket (1080p_25fps_H264-128kbit_AAC).mp3" id="5_y5yqo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_07opv"]
 shader = ExtResource("2_ur5bj")
@@ -22,6 +21,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
@@ -41,7 +41,6 @@ layer = 0
 [node name="UI" parent="CanvasLayer2" instance=ExtResource("4_cyir7")]
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_y5yqo")
 volume_db = -10.0
 autoplay = true
 

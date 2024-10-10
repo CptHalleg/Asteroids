@@ -1,80 +1,101 @@
-[gd_scene load_steps=15 format=3 uid="uid://ckk5blb67ec45"]
+[gd_scene load_steps=22 format=3 uid="uid://ckk5blb67ec45"]
 
-[ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="1_ayqvf"]
-[ext_resource type="Script" path="res://src/components/area/TargetPicker.cs" id="2_ed4nc"]
-[ext_resource type="Script" path="res://src/components/Turret.cs" id="4_71o6a"]
-[ext_resource type="Script" path="res://src/components/spawner/ProjectileSpawner.cs" id="5_hmw6p"]
+[ext_resource type="Script" path="res://src/ship/weapon/Weapon.cs" id="1_e3wpw"]
+[ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="2_orfc6"]
+[ext_resource type="Script" path="res://src/character/Character.cs" id="3_5e2x6"]
+[ext_resource type="Script" path="res://src/ship/weapon/weaponComponents/TargetPickerWeaponComponent.cs" id="3_f16kc"]
+[ext_resource type="Script" path="res://src/ship/weapon/weaponComponents/attachments/TargetPickerVisualizer.cs" id="4_4bdwk"]
+[ext_resource type="Resource" uid="uid://db0arp6rkojr5" path="res://ressources/statistics/basestatlists/pdc_basestats.tres" id="4_my3vb"]
+[ext_resource type="Script" path="res://src/ship/weapon/weaponComponents/TurretWeaponComponent.cs" id="5_jvvwu"]
 [ext_resource type="PackedScene" uid="uid://bepyot52eytrr" path="res://ressources/scenes/projectiles/pcd_bullet.tscn" id="5_oeaj8"]
+[ext_resource type="Script" path="res://src/components/spawner/ProjectileSpawner.cs" id="6_45oad"]
 [ext_resource type="AudioStream" uid="uid://dw8pgyd1vex1h" path="res://ressources/sounds/movex.ogg" id="6_l0gt2"]
-[ext_resource type="Script" path="res://src/tools/AudioSystemStream.cs" id="7_umq71"]
-[ext_resource type="Script" path="res://src/components/magazin/Magazin.cs" id="8_xt0k8"]
-[ext_resource type="Script" path="res://src/components/magazin/MagazinReloadTimer.cs" id="9_au8ak"]
-[ext_resource type="Script" path="res://src/components/magazin/MagazinDisplayMarker.cs" id="10_eyrcf"]
-[ext_resource type="Script" path="res://src/components/time/CooldownTimer.cs" id="11_u7whe"]
-[ext_resource type="Script" path="res://src/components/area/FireingArc.cs" id="13_4yl0y"]
-[ext_resource type="Script" path="res://src/components/area/FireingArcVisualizer.cs" id="14_kqn8q"]
+[ext_resource type="Script" path="res://src/ship/weapon/weaponComponents/MagazinWeaponComponent.cs" id="10_3oitu"]
+[ext_resource type="Script" path="res://src/audio/AudioSystemStream.cs" id="11_xpx1i"]
+[ext_resource type="Resource" uid="uid://dayv8fuav1q5j" path="res://ressources/statistics/stattypes/weapons/MaxBulletCount.tres" id="12_xbddl"]
+[ext_resource type="Resource" uid="uid://dfv5cm6c6gxdn" path="res://ressources/statistics/stattypes/weapons/CurrentBulletCount.tres" id="13_xcegp"]
+[ext_resource type="Resource" uid="uid://bf6hf0nhvpqll" path="res://ressources/statistics/stattypes/weapons/ReloadTime.tres" id="14_ry555"]
+[ext_resource type="Script" path="res://src/components/targeting/FireingArc.cs" id="16_jmfpg"]
+[ext_resource type="Script" path="res://src/components/targeting/FireingArcVisualizer.cs" id="17_17sg1"]
+[ext_resource type="Script" path="res://src/ship/weapon/weaponComponents/CooldownTimerWeaponComponent.cs" id="17_dfyad"]
+[ext_resource type="Resource" uid="uid://dbfjqb3lhqohm" path="res://ressources/statistics/stattypes/weapons/FireRate.tres" id="18_cwb2x"]
+[ext_resource type="Script" path="res://src/ship/weapon/weaponComponents/BarrelWeaponComponent.cs" id="22_ntsfn"]
 
 [sub_resource type="Resource" id="Resource_nr575"]
-script = ExtResource("7_umq71")
+script = ExtResource("11_xpx1i")
 AudioStream = ExtResource("6_l0gt2")
 Volume = -20.0
 MaxConcurrent = 3
 
 [node name="PCD" type="Node2D"]
-script = ExtResource("1_ayqvf")
+script = ExtResource("1_e3wpw")
+DisplayName = "PDC"
+
+[node name="TeamMarker" type="Node2D" parent="."]
+script = ExtResource("2_orfc6")
+Team = 1
+
+[node name="Character" type="Node" parent="."]
+script = ExtResource("3_5e2x6")
+baseStatList = ExtResource("4_my3vb")
 
 [node name="TargetPicker" type="Node2D" parent="." node_paths=PackedStringArray("FireingArc", "TeamMarker")]
-visibility_layer = 2
-script = ExtResource("2_ed4nc")
+script = ExtResource("3_f16kc")
 FireingArc = NodePath("../FireingArc")
-TeamMarker = NodePath("..")
+TeamMarker = NodePath("../TeamMarker")
 Type = 1
 
+[node name="TargetPickerVisualizer" type="Node2D" parent="TargetPicker"]
+script = ExtResource("4_4bdwk")
+
 [node name="Turret" type="Node2D" parent="." node_paths=PackedStringArray("fireingArc")]
-script = ExtResource("4_71o6a")
+script = ExtResource("5_jvvwu")
 fireingArc = NodePath("../FireingArc")
+BulletSpeed = null
 
 [node name="Rotor" type="Node2D" parent="Turret"]
+position = Vector2(4, 0)
 
 [node name="Line2D" type="Line2D" parent="Turret/Rotor"]
-points = PackedVector2Array(0, 0, 0, -15)
+points = PackedVector2Array(0, 0, 15, 0)
 width = 3.0
 
 [node name="Barrel" type="Node2D" parent="Turret/Rotor" node_paths=PackedStringArray("TeamMarker")]
-position = Vector2(0, -15)
-script = ExtResource("5_hmw6p")
+position = Vector2(15, 0)
+script = ExtResource("6_45oad")
 ProjectileSpeed = 1000.0
 ProjectileLifeTime = 1.0
-TeamMarker = NodePath("../../..")
+Inaccuracy = null
+TeamMarker = NodePath("../../../TeamMarker")
 spawnScene = ExtResource("5_oeaj8")
 SpawnAudioSteam = SubResource("Resource_nr575")
 
 [node name="Magazin" type="Node2D" parent="."]
-script = ExtResource("8_xt0k8")
-MaxCapacity = 300
-CurrentCount = 300
+script = ExtResource("10_3oitu")
+maxCountStatType = ExtResource("12_xbddl")
+currentCountStatType = ExtResource("13_xcegp")
+reloadTimeStatType = ExtResource("14_ry555")
+Reloading = null
 AutoReload = true
 
-[node name="MagazinReloadTimer" type="Timer" parent="Magazin"]
-script = ExtResource("9_au8ak")
-
-[node name="MagazinDisplayMarker" type="Node" parent="Magazin" node_paths=PackedStringArray("timer")]
-script = ExtResource("10_eyrcf")
-timer = NodePath("../MagazinReloadTimer")
-
-[node name="CooldownTimer" type="Node" parent="."]
-script = ExtResource("11_u7whe")
-Cooldown = 0.05
+[node name="CooldownTimer" type="Node2D" parent="."]
+script = ExtResource("17_dfyad")
+FireRateStatType = ExtResource("18_cwb2x")
+AutoUse = true
 
 [node name="FireingArc" type="Node2D" parent="."]
-script = ExtResource("13_4yl0y")
+script = ExtResource("16_jmfpg")
 MaxAngle = 1.5
+Range = 1000.0
 
 [node name="FireingArcVisualizer" type="Node2D" parent="FireingArc"]
-script = ExtResource("14_kqn8q")
+script = ExtResource("17_17sg1")
 
-[connection signal="TargetAcquired" from="TargetPicker" to="CooldownTimer" method="EnableAutouse"]
-[connection signal="TargetChanged" from="TargetPicker" to="Turret" method="SetTarget"]
-[connection signal="TargetLost" from="TargetPicker" to="CooldownTimer" method="DisableAutouse"]
-[connection signal="ConsumedCapacity" from="Magazin" to="Turret/Rotor/Barrel" method="Spawn"]
-[connection signal="StartedCooldown" from="CooldownTimer" to="Magazin" method="ConsumeCapacity"]
+[node name="Polygon2D2" type="Polygon2D" parent="."]
+position = Vector2(2, 0)
+rotation = 1.5708
+polygon = PackedVector2Array(-5, -3, -2, -6, 2, -6, 5, -3, 5, 9, -5, 9)
+
+[node name="BarrelWeaponComponent" type="Node2D" parent="." node_paths=PackedStringArray("Spawner")]
+script = ExtResource("22_ntsfn")
+Spawner = NodePath("../Turret/Rotor/Barrel")

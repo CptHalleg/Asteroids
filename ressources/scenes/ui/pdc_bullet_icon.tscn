@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bh14hadgfa2r7"]
+
+[node name="PdcBulletIcon" type="CenterContainer"]
+custom_minimum_size = Vector2(10, 10)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 2
+
+[node name="Polygon2D" type="Polygon2D" parent="Control"]
+polygon = PackedVector2Array(-5, 5, 5, 5, 5, -5, -5, -5)

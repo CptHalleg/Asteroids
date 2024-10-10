@@ -16,12 +16,12 @@ public partial class Spawner : Node2D
 		}
 
 		Node spawn = InstanciateNewNode();
+		World.Instance.AddChild(spawn);
 		AudioSystem.Play(SpawnAudioSteam);
 		EmitSignal(SignalName.Spawned, spawn);
     }
 	protected virtual Node InstanciateNewNode(){
 		Node spawn = spawnScene.Instantiate<Node>();
-		World.Instance.AddChild(spawn);
 		return spawn;
 	}
 }

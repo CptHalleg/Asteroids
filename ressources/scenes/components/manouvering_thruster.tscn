@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dutjvlpi7w06h"]
+[gd_scene load_steps=8 format=3 uid="uid://dutjvlpi7w06h"]
 
-[ext_resource type="Script" path="res://src/ship/ManouveringThruster.cs" id="1_mlwmo"]
+[ext_resource type="Script" path="res://src/ship/shipComponents/ManouveringThrusterShipComponent.cs" id="1_mlwmo"]
+[ext_resource type="Script" path="res://src/ship/shipComponents/Thruster.cs" id="2_1r20x"]
 [ext_resource type="AudioStream" uid="uid://cagmy5s2r7jj" path="res://ressources/sounds/ScatterNoise1.mp3" id="2_d2fyb"]
-[ext_resource type="PackedScene" uid="uid://bv3eksf3ae32p" path="res://ressources/scenes/components/thruster.tscn" id="2_stp2d"]
-[ext_resource type="Script" path="res://src/tools/AudioSystemStream.cs" id="3_53wj8"]
+[ext_resource type="Script" path="res://src/audio/AudioSystemStream.cs" id="3_53wj8"]
+[ext_resource type="Script" path="res://src/components/area/CopyCollisionPolygon2D.cs" id="5_7ho23"]
+[ext_resource type="Script" path="res://src/components/area/DamageDealer.cs" id="6_2fddx"]
 
 [sub_resource type="Resource" id="Resource_mp70v"]
 script = ExtResource("3_53wj8")
@@ -14,7 +16,24 @@ MaxConcurrent = 3
 [node name="ManouveringThruster" type="Node2D"]
 script = ExtResource("1_mlwmo")
 
-[node name="Thruster" parent="." instance=ExtResource("2_stp2d")]
+[node name="Thruster" type="Node2D" parent="."]
+script = ExtResource("2_1r20x")
 ActiveSound = SubResource("Resource_mp70v")
+
+[node name="Polygon2D" type="Polygon2D" parent="Thruster"]
+position = Vector2(0, 5)
+color = Color(0.454524, 0.454524, 0.454524, 1)
+polygon = PackedVector2Array(0, 0, -30, 30, 0, 200, 30, 30)
+
+[node name="Area2D" type="Area2D" parent="Thruster"]
+collision_layer = 0
+collision_mask = 514
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Thruster/Area2D" node_paths=PackedStringArray("Polygon2D")]
+script = ExtResource("5_7ho23")
+Polygon2D = NodePath("../../Polygon2D")
+
+[node name="DamageDealer" type="Node" parent="Thruster/Area2D"]
+script = ExtResource("6_2fddx")
 
 [connection signal="StateChanged" from="." to="Thruster" method="SetActive"]

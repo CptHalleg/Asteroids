@@ -11,9 +11,4 @@ public partial class TorpedoSpawner : ProjectileSpawner
 		torpedo.Target = Target;
 		return torpedo;
     }
-
-    private void SetTarget(Node2D target)
-    {
-		Target = target;
-	}
 }

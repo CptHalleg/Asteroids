@@ -19,6 +19,7 @@ public partial class TeamArea2D : Area2D
 
     public override void _EnterTree()
     {
+		DebugTools.IsSet(TeamMarker,this);
 		DebugTools.IsSet(TeamMarker, this);
         UpdateColor(TeamMarker.Team);
 		TeamMarker.TeamChanged += UpdateColor;
@@ -27,30 +28,33 @@ public partial class TeamArea2D : Area2D
     public void UpdateColor(Team team){
 		int offset;
 		if(team == Team.Player){
-			offset = 0;
+			offset = 1;
 		}else if(team == Team.Enemy){
-			offset = 8;
+			offset = 9;
 		}else{
-			offset = 16;
+			return;
 		}
+
 		
 		CollisionLayer = 0;
-		SetCollisionLayerValue(1 + offset, LayerShip);
-		SetCollisionLayerValue(2 + offset, LayerMissle);
-		SetCollisionLayerValue(3 + offset, LayerBullet);
+		SetCollisionLayerValue((int)TargetType.Ship + offset, LayerShip);
+		SetCollisionLayerValue((int)TargetType.Missle + offset, LayerMissle);
+		SetCollisionLayerValue((int)TargetType.Bullet + offset, LayerBullet);
 		
 		if(team == Team.Player){
-			offset = 8;
+			offset = 9;
 		}else if(team == Team.Enemy){
-			offset = 0;
-		}else{
-			offset = 16;
+			offset = 1;
 		}
 		
 		
 		CollisionMask = 0;
-		SetCollisionMaskValue(1 + offset, MaskShip);
-		SetCollisionMaskValue(2 + offset, MaskMissle);
-		SetCollisionMaskValue(3 + offset, MaskBullet);
+		SetCollisionMaskValue((int)TargetType.Ship + offset, MaskShip);
+		SetCollisionMaskValue((int)TargetType.Missle + offset, MaskMissle);
+		SetCollisionMaskValue((int)TargetType.Bullet + offset, MaskBullet);
+	}
+
+	public void SetCollisionLayerMaskValue(Team team, TargetType type, bool value){
+
 	}
 }

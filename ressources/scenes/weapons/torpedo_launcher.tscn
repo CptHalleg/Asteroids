@@ -1,57 +1,73 @@
-[gd_scene load_steps=11 format=3 uid="uid://unrv33h86xxb"]
+[gd_scene load_steps=18 format=3 uid="uid://unrv33h86xxb"]
 
-[ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="1_08o7h"]
-[ext_resource type="Script" path="res://src/components/area/TargetPicker.cs" id="2_qroyw"]
+[ext_resource type="Script" path="res://src/ship/weapon/Weapon.cs" id="1_lh5kj"]
+[ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="2_tqb78"]
+[ext_resource type="Script" path="res://src/ship/weapon/weaponComponents/TargetPickerWeaponComponent.cs" id="3_4472o"]
+[ext_resource type="Script" path="res://src/character/Character.cs" id="3_vfjc2"]
 [ext_resource type="PackedScene" uid="uid://cf7dxqh23ewty" path="res://ressources/scenes/projectiles/torpedo.tscn" id="4_41xxs"]
-[ext_resource type="Script" path="res://src/components/spawner/TorpedoSpawner.cs" id="4_wj40k"]
-[ext_resource type="Script" path="res://src/components/magazin/Magazin.cs" id="6_xp3lv"]
-[ext_resource type="Script" path="res://src/components/magazin/MagazinReloadTimer.cs" id="7_21aaq"]
-[ext_resource type="Script" path="res://src/components/magazin/MagazinDisplayMarker.cs" id="8_cb8s6"]
-[ext_resource type="Script" path="res://src/components/time/CooldownTimer.cs" id="9_yj41a"]
-[ext_resource type="Script" path="res://src/components/area/FireingArc.cs" id="10_yoyq0"]
-[ext_resource type="Script" path="res://src/components/area/FireingArcVisualizer.cs" id="11_qs63h"]
+[ext_resource type="Resource" uid="uid://dnav367dhn5mr" path="res://ressources/statistics/basestatlists/torpedo_laucher_basestats.tres" id="4_jnt5w"]
+[ext_resource type="Script" path="res://src/ship/weapon/weaponComponents/attachments/TargetPickerVisualizer.cs" id="4_vcmax"]
+[ext_resource type="Script" path="res://src/components/spawner/TorpedoSpawner.cs" id="5_ebp4s"]
+[ext_resource type="Script" path="res://src/ship/weapon/weaponComponents/TorpedoTubeWeaponComponent.cs" id="7_5ausb"]
+[ext_resource type="Script" path="res://src/ship/weapon/weaponComponents/MagazinWeaponComponent.cs" id="7_flow3"]
+[ext_resource type="Resource" uid="uid://dayv8fuav1q5j" path="res://ressources/statistics/stattypes/weapons/MaxBulletCount.tres" id="9_ki1t8"]
+[ext_resource type="Resource" uid="uid://dfv5cm6c6gxdn" path="res://ressources/statistics/stattypes/weapons/CurrentBulletCount.tres" id="10_sgv8j"]
+[ext_resource type="Resource" uid="uid://bf6hf0nhvpqll" path="res://ressources/statistics/stattypes/weapons/ReloadTime.tres" id="11_2d4x8"]
+[ext_resource type="Script" path="res://src/components/targeting/FireingArc.cs" id="13_g0w5e"]
+[ext_resource type="Script" path="res://src/components/targeting/FireingArcVisualizer.cs" id="14_mobn0"]
+[ext_resource type="Script" path="res://src/ship/weapon/weaponComponents/CooldownTimerWeaponComponent.cs" id="14_qhv2e"]
+[ext_resource type="Resource" uid="uid://dbfjqb3lhqohm" path="res://ressources/statistics/stattypes/weapons/FireRate.tres" id="16_7g0a2"]
 
 [node name="TorpedoLauncher" type="Node2D"]
-script = ExtResource("1_08o7h")
+script = ExtResource("1_lh5kj")
+DisplayName = "Torpedo Launcher"
+
+[node name="TeamMarker" type="Node" parent="."]
+script = ExtResource("2_tqb78")
+Team = null
+
+[node name="Character" type="Node" parent="."]
+script = ExtResource("3_vfjc2")
+baseStatList = ExtResource("4_jnt5w")
 
 [node name="TargetPicker" type="Node2D" parent="." node_paths=PackedStringArray("FireingArc", "TeamMarker")]
-script = ExtResource("2_qroyw")
+script = ExtResource("3_4472o")
 FireingArc = NodePath("../FireingArc")
-TeamMarker = NodePath("..")
+TeamMarker = NodePath("../TeamMarker")
+Type = null
 
-[node name="TorpedoSpawner" type="Node2D" parent="." node_paths=PackedStringArray("TeamMarker")]
-script = ExtResource("4_wj40k")
+[node name="TargetPickerVisualizer" type="Node2D" parent="TargetPicker"]
+script = ExtResource("4_vcmax")
+
+[node name="TorpedoTubeWeaponComponent" type="Node2D" parent="." node_paths=PackedStringArray("Spawner")]
+script = ExtResource("7_5ausb")
+Spawner = NodePath("TorpedoSpawner")
+
+[node name="TorpedoSpawner" type="Node2D" parent="TorpedoTubeWeaponComponent" node_paths=PackedStringArray("TeamMarker")]
+script = ExtResource("5_ebp4s")
+ProjectileSpeed = 50.0
 ProjectileLifeTime = 60.0
 Inaccuracy = 0.0
-TeamMarker = NodePath("..")
+TeamMarker = NodePath("../../TeamMarker")
 spawnScene = ExtResource("4_41xxs")
 
-[node name="Magazin" type="Node" parent="."]
-script = ExtResource("6_xp3lv")
+[node name="Magazin" type="Node2D" parent="."]
+script = ExtResource("7_flow3")
+maxCountStatType = ExtResource("9_ki1t8")
+currentCountStatType = ExtResource("10_sgv8j")
+reloadTimeStatType = ExtResource("11_2d4x8")
+Reloading = null
 AutoReload = true
 
-[node name="MagazinReloadTimer" type="Timer" parent="Magazin"]
-wait_time = 10.0
-script = ExtResource("7_21aaq")
-
-[node name="Node" type="Node" parent="Magazin" node_paths=PackedStringArray("timer")]
-script = ExtResource("8_cb8s6")
-timer = NodePath("../MagazinReloadTimer")
-
-[node name="CooldownTImer" type="Node" parent="."]
-script = ExtResource("9_yj41a")
-Cooldown = 0.3
+[node name="CooldownTImer" type="Node2D" parent="."]
+script = ExtResource("14_qhv2e")
+FireRateStatType = ExtResource("16_7g0a2")
+AutoUse = null
 
 [node name="FireingArc" type="Node2D" parent="."]
-script = ExtResource("10_yoyq0")
+script = ExtResource("13_g0w5e")
 MaxAngle = 4.0
 Range = 10000.0
 
 [node name="FireingArcVisualizer" type="Node2D" parent="FireingArc"]
-script = ExtResource("11_qs63h")
-
-[connection signal="TargetAcquired" from="TargetPicker" to="CooldownTImer" method="EnableAutouse"]
-[connection signal="TargetChanged" from="TargetPicker" to="TorpedoSpawner" method="SetTarget"]
-[connection signal="TargetLost" from="TargetPicker" to="CooldownTImer" method="DisableAutouse"]
-[connection signal="ConsumedCapacity" from="Magazin" to="TorpedoSpawner" method="Spawn"]
-[connection signal="StartedCooldown" from="CooldownTImer" to="Magazin" method="ConsumeCapacity"]
+script = ExtResource("14_mobn0")

@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://bv3eksf3ae32p"]
 
-[ext_resource type="Script" path="res://src/ship/Thruster.cs" id="1_b7mie"]
+[ext_resource type="Script" path="res://src/ship/shipComponents/Thruster.cs" id="1_b7mie"]
 [ext_resource type="AudioStream" uid="uid://cagmy5s2r7jj" path="res://ressources/sounds/ScatterNoise1.mp3" id="2_08703"]
-[ext_resource type="Script" path="res://src/components/area/CopyCollisionPolygon2D.cs" id="2_hqn04"]
-[ext_resource type="Script" path="res://src/tools/AudioSystemStream.cs" id="2_ul1sq"]
-[ext_resource type="Script" path="res://src/components/area/DamageDealer.cs" id="3_lys01"]
+[ext_resource type="Script" path="res://src/audio/AudioSystemStream.cs" id="2_ul1sq"]
+[ext_resource type="Script" path="res://src/components/area/CopyCollisionPolygon2D.cs" id="4_cvdqt"]
+[ext_resource type="Script" path="res://src/components/area/DamageDealer.cs" id="5_u4s84"]
 
 [sub_resource type="Resource" id="Resource_80ilx"]
 script = ExtResource("2_ul1sq")
@@ -26,8 +26,8 @@ collision_layer = 0
 collision_mask = 514
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" node_paths=PackedStringArray("Polygon2D")]
-script = ExtResource("2_hqn04")
+script = ExtResource("4_cvdqt")
 Polygon2D = NodePath("../../Polygon2D")
 
 [node name="DamageDealer" type="Node" parent="Area2D"]
-script = ExtResource("3_lys01")
+script = ExtResource("5_u4s84")

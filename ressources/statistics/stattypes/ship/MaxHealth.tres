@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MultiAttributeStatType" load_steps=3 format=3 uid="uid://cyjgjw00sueqc"]
+
+[ext_resource type="Resource" uid="uid://c7t7lmdocdugk" path="res://ressources/statistics/stattypes/ship/BaseMaxHealth.tres" id="1_e2hgh"]
+[ext_resource type="Script" path="res://src/character/stats/stattypes/MultiAttributeStatType.cs" id="2_i8jfj"]
+
+[resource]
+script = ExtResource("2_i8jfj")
+baseStatType = ExtResource("1_e2hgh")
+Name = "MaxHealth"

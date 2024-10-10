@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://bp1dhmudtqm4h"]
+
+[ext_resource type="Script" path="res://src/ui/player_status/WeaponDetailsUi.cs" id="1_pawu4"]
+[ext_resource type="Script" path="res://src/ui/player_status/StatDisplayUI.cs" id="2_4g41n"]
+
+[node name="WeaponDetailsUi" type="VBoxContainer" node_paths=PackedStringArray("nameDusplay", "statDisplay")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_pawu4")
+nameDusplay = NodePath("Label")
+statDisplay = NodePath("RichTextLabel")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 30
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+fit_content = true
+script = ExtResource("2_4g41n")

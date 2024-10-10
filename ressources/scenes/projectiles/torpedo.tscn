@@ -1,22 +1,22 @@
 [gd_scene load_steps=14 format=3 uid="uid://cf7dxqh23ewty"]
 
-[ext_resource type="Script" path="res://src/objects/Torpedo.cs" id="1_lf6wa"]
-[ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="4_tdi0v"]
-[ext_resource type="Script" path="res://src/components/area/DamagableArea.cs" id="5_582ab"]
+[ext_resource type="Script" path="res://src/ship/weapon/projectiles/Torpedo.cs" id="1_lf6wa"]
+[ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="4_maymo"]
+[ext_resource type="Script" path="res://src/components/team/Targetable.cs" id="5_cnwwj"]
 [ext_resource type="AudioStream" uid="uid://btufe1rv0jf3a" path="res://ressources/sounds/beep.wav" id="5_ipk7f"]
+[ext_resource type="Script" path="res://src/components/team/TeamPolygon2D.cs" id="6_5vemt"]
 [ext_resource type="AudioStream" uid="uid://njv7b2xr7iaq" path="res://ressources/sounds/Hit 1.mp3" id="6_yo03u"]
-[ext_resource type="Script" path="res://src/components/area/DamageDealer.cs" id="7_3n27s"]
-[ext_resource type="Script" path="res://src/components/team/TeamPolygon2D.cs" id="8_rhdjm"]
+[ext_resource type="Script" path="res://src/components/area/DamagableArea.cs" id="7_8auka"]
+[ext_resource type="Script" path="res://src/components/area/DamageDealer.cs" id="8_4ei3i"]
 [ext_resource type="Script" path="res://src/components/SelfDestructor.cs" id="9_wbj4r"]
 [ext_resource type="AudioStream" uid="uid://dmtnelu4cjkrs" path="res://ressources/sounds/8bit_bomb_explosion.wav" id="10_1kfdq"]
-[ext_resource type="Script" path="res://src/tools/AudioSystemStream.cs" id="10_5hh0v"]
-[ext_resource type="Script" path="res://src/components/team/Targetable.cs" id="11_s3thi"]
+[ext_resource type="Script" path="res://src/audio/AudioSystemStream.cs" id="11_q75qh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lc86p"]
 radius = 20.0
 
 [sub_resource type="Resource" id="Resource_t8u7b"]
-script = ExtResource("10_5hh0v")
+script = ExtResource("11_q75qh")
 AudioStream = ExtResource("10_1kfdq")
 Volume = 0.0
 MaxConcurrent = 5
@@ -26,33 +26,36 @@ script = ExtResource("1_lf6wa")
 destroyedAudioSteam = ExtResource("5_ipk7f")
 explodedAudioSteam = ExtResource("6_yo03u")
 
-[node name="TeamMarker" type="Node" parent="."]
-script = ExtResource("4_tdi0v")
+[node name="TeamMarker" type="Node2D" parent="."]
+script = ExtResource("4_maymo")
+Team = 2
 
 [node name="Targetable" type="Node2D" parent="." node_paths=PackedStringArray("TeamMarker")]
-script = ExtResource("11_s3thi")
+script = ExtResource("5_cnwwj")
 TeamMarker = NodePath("../TeamMarker")
 Type = 1
+
+[node name="Polygon2D" type="Polygon2D" parent="." node_paths=PackedStringArray("TeamMarker")]
+color = Color(1, 0.345098, 0, 1)
+polygon = PackedVector2Array(0, -20, -17, 10, 17, 10)
+script = ExtResource("6_5vemt")
+PlayerTeamColor = Color(0.359555, 0.58871, 0.972524, 1)
+EnemyTeamColor = Color(1, 0.345098, 0, 1)
+TeamMarker = NodePath("../TeamMarker")
 
 [node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("TeamMarker")]
 collision_layer = 0
 collision_mask = 0
-script = ExtResource("5_582ab")
+script = ExtResource("7_8auka")
+LayerMissle = true
+MaskShip = true
 TeamMarker = NodePath("../TeamMarker")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_lc86p")
 
 [node name="DamageDealer" type="Node" parent="Area2D"]
-script = ExtResource("7_3n27s")
-
-[node name="Polygon2D" type="Polygon2D" parent="." node_paths=PackedStringArray("TeamMarker")]
-color = Color(1, 0.345098, 0, 1)
-polygon = PackedVector2Array(0, -20, -17, 10, 17, 10)
-script = ExtResource("8_rhdjm")
-PlayerTeamColor = Color(0.359555, 0.58871, 0.972524, 1)
-EnemyTeamColor = Color(1, 0.345098, 0, 1)
-TeamMarker = NodePath("../TeamMarker")
+script = ExtResource("8_4ei3i")
 
 [node name="SelfDestructorExplosion" type="Node" parent="."]
 script = ExtResource("9_wbj4r")
@@ -61,5 +64,5 @@ destructionSound = SubResource("Resource_t8u7b")
 [node name="SelfDestructorDestroyed" type="Node" parent="."]
 script = ExtResource("9_wbj4r")
 
-[connection signal="Damageed" from="Area2D" to="SelfDestructorDestroyed" method="SelfDestruct" unbinds=1]
+[connection signal="Damaged" from="Area2D" to="SelfDestructorDestroyed" method="SelfDestruct" unbinds=1]
 [connection signal="DealtDamage" from="Area2D/DamageDealer" to="SelfDestructorExplosion" method="SelfDestruct" unbinds=1]

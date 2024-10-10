@@ -1,7 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://d0sjcjfxr01jh"]
+[gd_scene load_steps=3 format=3 uid="uid://d0sjcjfxr01jh"]
 
-[ext_resource type="Script" path="res://src/ship/Gyroscope.cs" id="1_1dwio"]
+[ext_resource type="Script" path="res://src/ship/shipComponents/RotatorAttachment.cs" id="1_1dwio"]
+[ext_resource type="Resource" uid="uid://dghkdj8snybvu" path="res://ressources/statistics/stattypes/ship/RotationSpeed.tres" id="2_6r141"]
 
 [node name="Gyroscope" type="Node2D"]
 script = ExtResource("1_1dwio")
-RotationSpeed = 3.0
+rotationSpeedStatType = ExtResource("2_6r141")

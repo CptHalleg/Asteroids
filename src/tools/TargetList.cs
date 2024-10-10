@@ -2,9 +2,10 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
-public static partial class TargetList
+public static class TargetList
 {
 	private static Dictionary<Team,Dictionary<TargetType,HashSet<Targetable>>> targets = new Dictionary<Team,Dictionary<TargetType,HashSet<Targetable>>>();
     public static IReadOnlyCollection<Targetable> GetTargets(Team team, TargetType type)
@@ -19,7 +20,8 @@ public static partial class TargetList
         return targets[team][type];
     }
 
-	public static bool AddTargetable(Targetable targetable){
+	public static bool AddTargetable(Targetable targetable)
+	{
 		if(!targets.ContainsKey(targetable.Team)){
 			targets.Add(targetable.Team, new Dictionary<TargetType, HashSet<Targetable>>());
 		}
@@ -31,12 +33,20 @@ public static partial class TargetList
 		return targets[targetable.Team][targetable.Type].Add(targetable);
 	}
 
-	public static bool RemoveTargetable(Targetable targetable){
-
+	public static bool RemoveTargetable(Targetable targetable)
+	{
+		if(!targets.ContainsKey(targetable.Team)){
+			return false;
+		}
+		
+		if(!targets[targetable.Team].ContainsKey(targetable.Type)){
+			return false;
+		}
 		return targets[targetable.Team][targetable.Type].Remove(targetable);
 	}
 
-		public static Team Opposition(this Team team){
+	public static Team Opposition(this Team team)
+	{
 		switch(team){
 			case Team.Player: return Team.Enemy;
 			case Team.Enemy: return Team.Player;
@@ -46,7 +56,7 @@ public static partial class TargetList
 }
 
 public enum Team{
-	Player,Enemy, None
+	None,Player,Enemy
 }
 
 public enum TargetType{

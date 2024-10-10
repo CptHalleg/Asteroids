@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="BaseStatList" load_steps=12 format=3 uid="uid://uijcwwhf7i3k"]
+
+[ext_resource type="Script" path="res://src/character/stats/BaseStatList.cs" id="1_d8cm4"]
+[ext_resource type="Resource" uid="uid://bcnic23kgq0pi" path="res://ressources/statistics/statlists/ship_stats.tres" id="1_s6xxd"]
+[ext_resource type="Resource" uid="uid://c7t7lmdocdugk" path="res://ressources/statistics/stattypes/ship/BaseMaxHealth.tres" id="2_xsdxu"]
+[ext_resource type="Script" path="res://src/character/stats/BaseStatValue.cs" id="3_62tla"]
+[ext_resource type="Resource" uid="uid://b0lw2w8jkxjn1" path="res://ressources/statistics/stattypes/ship/PostDamageInvounrability.tres" id="4_ffcgd"]
+[ext_resource type="Resource" uid="uid://dghkdj8snybvu" path="res://ressources/statistics/stattypes/ship/RotationSpeed.tres" id="5_fr65e"]
+[ext_resource type="Resource" uid="uid://diaj2p458xolp" path="res://ressources/statistics/stattypes/ship/BoostSpeed.tres" id="6_5jwim"]
+
+[sub_resource type="Resource" id="Resource_2qhxd"]
+script = ExtResource("3_62tla")
+AttributeStatType = ExtResource("2_xsdxu")
+Value = 5.0
+
+[sub_resource type="Resource" id="Resource_cqqa6"]
+script = ExtResource("3_62tla")
+AttributeStatType = ExtResource("4_ffcgd")
+Value = 1.0
+
+[sub_resource type="Resource" id="Resource_y6xw5"]
+script = ExtResource("3_62tla")
+AttributeStatType = ExtResource("5_fr65e")
+Value = 3.0
+
+[sub_resource type="Resource" id="Resource_31i5l"]
+script = ExtResource("3_62tla")
+AttributeStatType = ExtResource("6_5jwim")
+Value = 200.0
+
+[resource]
+script = ExtResource("1_d8cm4")
+StatList = ExtResource("1_s6xxd")
+baseStatValues = Array[Object]([SubResource("Resource_2qhxd"), SubResource("Resource_cqqa6"), SubResource("Resource_y6xw5"), SubResource("Resource_31i5l")])
