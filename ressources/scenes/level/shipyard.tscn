@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://bp8m5yc8cf14w"]
+
+[ext_resource type="Script" path="res://src/Shipyard.cs" id="1_2vmsk"]
+[ext_resource type="PackedScene" uid="uid://bn6mif7tod57y" path="res://ressources/scenes/player/hulls/ship.tscn" id="2_n08yc"]
+[ext_resource type="PackedScene" uid="uid://csire1xdoihpn" path="res://ressources/scenes/ui/shipyard/shipyard_ui.tscn" id="3_pisdr"]
+[ext_resource type="PackedScene" uid="uid://dk7w7w2qqbtuj" path="res://ressources/scenes/ui/mainmenu/game_menu.tscn" id="3_vehuy"]
+
+[node name="Shipyard" type="Node2D"]
+script = ExtResource("1_2vmsk")
+
+[node name="Ship" parent="." instance=ExtResource("2_n08yc")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="MarginContainer" parent="CanvasLayer2" instance=ExtResource("3_pisdr")]
+
+[node name="GameMenu" parent="CanvasLayer2" instance=ExtResource("3_vehuy")]

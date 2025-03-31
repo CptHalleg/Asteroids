@@ -1,0 +1,109 @@
+[gd_scene load_steps=21 format=3 uid="uid://bn6mif7tod57y"]
+
+[ext_resource type="Script" path="res://src/ship/Ship.cs" id="1_5nb0s"]
+[ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="2_ytfpu"]
+[ext_resource type="Script" path="res://src/character/Character.cs" id="3_ol4d8"]
+[ext_resource type="Resource" uid="uid://uijcwwhf7i3k" path="res://ressources/statistics/basestatlists/ship_basestats.tres" id="4_ytyr1"]
+[ext_resource type="Script" path="res://src/character/HealthManager.cs" id="5_3kdc0"]
+[ext_resource type="Resource" uid="uid://b4700tas0fn4y" path="res://ressources/statistics/stattypes/ship/Health.tres" id="6_hk7dd"]
+[ext_resource type="Script" path="res://src/character/PostDamageInvincibility.cs" id="7_dk0fo"]
+[ext_resource type="Resource" uid="uid://b0lw2w8jkxjn1" path="res://ressources/statistics/stattypes/ship/PostDamageInvounrability.tres" id="8_37vhn"]
+[ext_resource type="Script" path="res://src/components/area/DamagableArea.cs" id="9_snus2"]
+[ext_resource type="Script" path="res://src/components/area/CopyCollisionPolygon2D.cs" id="10_nx34r"]
+[ext_resource type="Script" path="res://src/components/area/CharacterDamagable.cs" id="11_54q0m"]
+[ext_resource type="Script" path="res://src/ship/shipComponents/WeaponHardpoint.cs" id="12_nvh2l"]
+[ext_resource type="PackedScene" uid="uid://ckk5blb67ec45" path="res://ressources/scenes/player/weapons/pcd.tscn" id="13_dyal5"]
+[ext_resource type="PackedScene" uid="uid://unrv33h86xxb" path="res://ressources/scenes/player/weapons/torpedo_launcher.tscn" id="14_i5lm3"]
+[ext_resource type="Script" path="res://src/ship/shipComponents/DriveHardpoint.cs" id="15_3434g"]
+[ext_resource type="PackedScene" uid="uid://dafxveorbrw8j" path="res://ressources/scenes/player/drives/drive.tscn" id="16_gtgf6"]
+[ext_resource type="Script" path="res://src/ship/shipComponents/RotationHardpoint.cs" id="17_rrphy"]
+[ext_resource type="PackedScene" uid="uid://d0sjcjfxr01jh" path="res://ressources/scenes/player/rotators/gyroscope.tscn" id="18_bcwu1"]
+[ext_resource type="Script" path="res://src/player/PlayerController.cs" id="19_ub665"]
+[ext_resource type="Script" path="res://src/components/team/Targetable.cs" id="20_kmndb"]
+
+[node name="Ship" type="Node2D"]
+script = ExtResource("1_5nb0s")
+
+[node name="TeamMarker" type="Node" parent="."]
+script = ExtResource("2_ytfpu")
+Team = 1
+
+[node name="Character" type="Node" parent="."]
+script = ExtResource("3_ol4d8")
+baseStatList = ExtResource("4_ytyr1")
+
+[node name="HealthManager" type="Node" parent="Character"]
+script = ExtResource("5_3kdc0")
+healthStatType = ExtResource("6_hk7dd")
+
+[node name="PostDamageInvincibility" type="Node" parent="Character"]
+script = ExtResource("7_dk0fo")
+invinciblityStat = ExtResource("8_37vhn")
+
+[node name="Hitbox" type="Area2D" parent="." node_paths=PackedStringArray("TeamMarker")]
+collision_mask = 0
+script = ExtResource("9_snus2")
+LayerShip = true
+TeamMarker = NodePath("../TeamMarker")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox" node_paths=PackedStringArray("Polygon2D")]
+script = ExtResource("10_nx34r")
+Polygon2D = NodePath("../../Polygon2D")
+
+[node name="CharacterDamagable" type="Node" parent="Hitbox" node_paths=PackedStringArray("character")]
+script = ExtResource("11_54q0m")
+character = NodePath("../../Character")
+
+[node name="WeaponHardpoint" type="Node2D" parent="."]
+position = Vector2(-13, 0)
+rotation = -2.70526
+script = ExtResource("12_nvh2l")
+DisplayName = "Front Left"
+
+[node name="PCD" parent="WeaponHardpoint" instance=ExtResource("13_dyal5")]
+
+[node name="WeaponHardpoint2" type="Node2D" parent="."]
+position = Vector2(13, 4.76837e-07)
+rotation = -0.436332
+script = ExtResource("12_nvh2l")
+DisplayName = "Front Right"
+
+[node name="PCD" parent="WeaponHardpoint2" instance=ExtResource("13_dyal5")]
+
+[node name="WeaponHardpoint3" type="Node2D" parent="."]
+position = Vector2(-22, 25)
+rotation = -2.70526
+script = ExtResource("12_nvh2l")
+DisplayName = "Back Left"
+
+[node name="TorpedoLauncher" parent="WeaponHardpoint3" instance=ExtResource("14_i5lm3")]
+
+[node name="WeaponHardpoint4" type="Node2D" parent="."]
+position = Vector2(22, 25)
+rotation = -0.436332
+script = ExtResource("12_nvh2l")
+DisplayName = "Back Right"
+
+[node name="TorpedoLauncher" parent="WeaponHardpoint4" instance=ExtResource("14_i5lm3")]
+
+[node name="DriveHardpoint" type="Node2D" parent="."]
+position = Vector2(0, 40)
+script = ExtResource("15_3434g")
+
+[node name="Drive" parent="DriveHardpoint" instance=ExtResource("16_gtgf6")]
+
+[node name="RotationHardpoint" type="Node2D" parent="."]
+script = ExtResource("17_rrphy")
+
+[node name="Gyroscope" parent="RotationHardpoint" instance=ExtResource("18_bcwu1")]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+invert_border = 0.1
+polygon = PackedVector2Array(0, -35, -30, 50, 0, 35, 30, 50)
+
+[node name="PlayerController" type="Node2D" parent="."]
+script = ExtResource("19_ub665")
+
+[node name="Targetable" type="Node2D" parent="." node_paths=PackedStringArray("TeamMarker")]
+script = ExtResource("20_kmndb")
+TeamMarker = NodePath("../TeamMarker")

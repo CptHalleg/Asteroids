@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://cocdiipdxq5na"]
+
+[ext_resource type="Script" path="res://src/ui/HardpointEquipUI.cs" id="1_l668q"]
+[ext_resource type="PackedScene" uid="uid://bve0r6j7muew6" path="res://ressources/scenes/ui/misc/details/weapon_details_ui.tscn" id="2_ka0u7"]
+
+[node name="VBoxContainer" type="VBoxContainer" node_paths=PackedStringArray("nameLabel", "removeButton", "addButton")]
+offset_right = 197.0
+offset_bottom = 90.0
+size_flags_vertical = 3
+script = ExtResource("1_l668q")
+nameLabel = NodePath("HBoxContainer/Label")
+removeButton = NodePath("HBoxContainer/RemoveButton")
+addButton = NodePath("HBoxContainer/AddButton")
+weaponDetailsScene = ExtResource("2_ka0u7")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Hardpoint
+"
+
+[node name="Control" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RemoveButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Remove
+"
+
+[node name="AddButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Add
+"

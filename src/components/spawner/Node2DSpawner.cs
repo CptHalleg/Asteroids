@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Node2DSpawner : Spawner
+public partial class Node2DSpawner : SceneSpawner
 {
     protected override Node InstanciateNewNode()
     {

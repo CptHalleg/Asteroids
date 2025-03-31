@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 public partial class Ship : SimpleRigidbody2D
@@ -11,6 +12,11 @@ public partial class Ship : SimpleRigidbody2D
 	private List<WeaponHardpoint> weaponHardpoints = new List<WeaponHardpoint>();
 	private List<DriveHardpoint> driveHardpoints = new List<DriveHardpoint>();
 	private List<RotationHardpoint> rotationHardpoints = new List<RotationHardpoint>();
+
+	
+  	public ReadOnlyCollection<WeaponHardpoint> WeaponHardpoints => weaponHardpoints.AsReadOnly();
+  	public ReadOnlyCollection<DriveHardpoint> DriveHardpoints => driveHardpoints.AsReadOnly();
+  	public ReadOnlyCollection<RotationHardpoint> RotationHardpoints => rotationHardpoints.AsReadOnly();
 	public TeamMarker TeamMarker{get; private set;}
 	public Character Character{get; private set;}
 
@@ -65,8 +71,4 @@ public partial class Ship : SimpleRigidbody2D
 			}
 		}
     }
-
-	public IReadOnlyCollection<WeaponHardpoint> GetHardpoints(){
-		return weaponHardpoints;
-	}
 }

@@ -9,7 +9,7 @@ public partial class WeaponsListUI : HBoxContainer
 
     public override void _Ready()
     {
-        foreach(WeaponHardpoint currentHardpoint in PlayerController.playerShip.GetHardpoints()){
+        foreach(WeaponHardpoint currentHardpoint in PlayerController.playerShip.WeaponHardpoints){
             Weapon weapon = currentHardpoint.Attachment;
             WeaponStatusUI weaponStatusUI = WeaponStatusUIScene.Instantiate<WeaponStatusUI>();
             weaponStatusUI.Init(weapon);

@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3 uid="uid://b1laxpbwrnmr7"]
 
 [ext_resource type="Script" path="res://src/ship/Ship.cs" id="1_6emyc"]
-[ext_resource type="PackedScene" uid="uid://unrv33h86xxb" path="res://ressources/scenes/weapons/torpedo_launcher.tscn" id="1_kbi28"]
+[ext_resource type="PackedScene" uid="uid://unrv33h86xxb" path="res://ressources/scenes/player/weapons/torpedo_launcher.tscn" id="1_kbi28"]
 [ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="2_n7irk"]
 [ext_resource type="Script" path="res://src/character/Character.cs" id="3_ck6ly"]
 [ext_resource type="Resource" uid="uid://uijcwwhf7i3k" path="res://ressources/statistics/basestatlists/ship_basestats.tres" id="4_y6ac1"]
@@ -9,11 +9,11 @@
 [ext_resource type="Script" path="res://src/components/area/DamagableArea.cs" id="7_p5p5t"]
 [ext_resource type="Script" path="res://src/ship/shipComponents/DriveHardpoint.cs" id="7_tyuyn"]
 [ext_resource type="Script" path="res://src/components/area/CopyCollisionPolygon2D.cs" id="8_aj6tv"]
-[ext_resource type="PackedScene" uid="uid://beqnhbocee3lv" path="res://ressources/scenes/ui/offscreen_hint.tscn" id="8_kr3a5"]
-[ext_resource type="PackedScene" uid="uid://dafxveorbrw8j" path="res://ressources/scenes/components/drive.tscn" id="8_qke7v"]
-[ext_resource type="Script" path="res://src/ui/marker/OffscreenHintMarker.cs" id="9_7v57n"]
+[ext_resource type="PackedScene" uid="uid://beqnhbocee3lv" path="res://ressources/scenes/ui/ingame/hud/offscreen_hint.tscn" id="8_kr3a5"]
+[ext_resource type="PackedScene" uid="uid://dafxveorbrw8j" path="res://ressources/scenes/player/drives/drive.tscn" id="8_qke7v"]
+[ext_resource type="Script" path="res://src/ui/OffscreenHintMarker.cs" id="9_7v57n"]
 [ext_resource type="Script" path="res://src/ship/shipComponents/RotationHardpoint.cs" id="9_yfihb"]
-[ext_resource type="PackedScene" uid="uid://d0sjcjfxr01jh" path="res://ressources/scenes/components/gyroscope.tscn" id="10_2j2xg"]
+[ext_resource type="PackedScene" uid="uid://d0sjcjfxr01jh" path="res://ressources/scenes/player/rotators/gyroscope.tscn" id="10_2j2xg"]
 [ext_resource type="PackedScene" uid="uid://dutjvlpi7w06h" path="res://ressources/scenes/components/manouvering_thruster.tscn" id="11_nedv4"]
 [ext_resource type="Script" path="res://src/ai/KeepDistanceAIBehavoir.cs" id="12_yhvvs"]
 [ext_resource type="Script" path="res://src/components/team/Targetable.cs" id="15_u1ueo"]
@@ -100,27 +100,23 @@ DisplayName = "Hardpoint"
 [node name="DriveHardpoint" type="Node2D" parent="."]
 position = Vector2(-180, 550)
 script = ExtResource("7_tyuyn")
-DisplayName = null
 
 [node name="Drive" parent="DriveHardpoint" instance=ExtResource("8_qke7v")]
 
 [node name="DriveHardpoint2" type="Node2D" parent="."]
 position = Vector2(0, 550)
 script = ExtResource("7_tyuyn")
-DisplayName = null
 
 [node name="Drive" parent="DriveHardpoint2" instance=ExtResource("8_qke7v")]
 
 [node name="DriveHardpoint3" type="Node2D" parent="."]
 position = Vector2(180, 550)
 script = ExtResource("7_tyuyn")
-DisplayName = null
 
 [node name="Drive" parent="DriveHardpoint3" instance=ExtResource("8_qke7v")]
 
 [node name="RotationHardpointShipComponent" type="Node2D" parent="."]
 script = ExtResource("9_yfihb")
-DisplayName = null
 
 [node name="Gyroscope" parent="RotationHardpointShipComponent" instance=ExtResource("10_2j2xg")]
 
@@ -133,11 +129,6 @@ collision_layer = 256
 collision_mask = 0
 script = ExtResource("7_p5p5t")
 LayerShip = true
-LayerMissle = null
-LayerBullet = null
-MaskShip = null
-MaskMissle = null
-MaskBullet = null
 TeamMarker = NodePath("../TeamMarker")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" node_paths=PackedStringArray("Polygon2D")]
@@ -166,12 +157,10 @@ PositiveRotationDirection = true
 [node name="ManouveringThruster2" parent="." instance=ExtResource("11_nedv4")]
 position = Vector2(219, -565)
 rotation = -1.5708
-PositiveRotationDirection = null
 
 [node name="ManouveringThruster3" parent="." instance=ExtResource("11_nedv4")]
 position = Vector2(-194, 429)
 rotation = 1.5708
-PositiveRotationDirection = null
 
 [node name="ManouveringThruster4" parent="." instance=ExtResource("11_nedv4")]
 position = Vector2(190, 432)
@@ -181,4 +170,3 @@ PositiveRotationDirection = true
 [node name="Targetable" type="Node2D" parent="." node_paths=PackedStringArray("TeamMarker")]
 script = ExtResource("15_u1ueo")
 TeamMarker = NodePath("../TeamMarker")
-Type = null

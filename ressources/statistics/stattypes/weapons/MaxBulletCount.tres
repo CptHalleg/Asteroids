@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("1_csgxc")
-Name = "MaxBullet Count"
+DisplayName = "Max Bullet Count"
+Units = ""

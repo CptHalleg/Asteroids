@@ -13,4 +13,8 @@ public abstract class Stat
 		StatType = statType;
 		Statistics = statistics;
 	}
+
+	public string GetDescription(){
+		return StatType.DisplayName + ": " + GetValue() + StatType.Units;
+	}
 }

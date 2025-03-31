@@ -13,8 +13,8 @@ public partial class DetailsUI : Control
 		DebugTools.IsSet(shipStatDisplay, this);
 		shipStatDisplay.Character = PlayerController.playerShip.Character;
 
-		foreach(WeaponHardpoint weaponHardpoint in PlayerController.playerShip.GetHardpoints()){
-			WeaponDetailsUi c = weaponDetailsScene.Instantiate<WeaponDetailsUi>();
+		foreach(WeaponHardpoint weaponHardpoint in PlayerController.playerShip.WeaponHardpoints){
+			WeaponDetailsUI c = weaponDetailsScene.Instantiate<WeaponDetailsUI>();
 			c.Weapon = weaponHardpoint.Attachment;
 			weaponDetailsRoot.AddChild(c);
 		}

@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("1_o4twe")
-Name = "BoostSpeed"
+DisplayName = "Boost Speed"
+Units = ""

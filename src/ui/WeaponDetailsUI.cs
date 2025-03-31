@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class WeaponDetailsUi : Node
+public partial class WeaponDetailsUI : Node
 {
 	[Export] private Label nameDusplay;
 	[Export] private StatDisplayUI statDisplay;

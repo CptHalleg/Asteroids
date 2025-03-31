@@ -1,17 +1,17 @@
 [gd_scene load_steps=13 format=3 uid="uid://bf625fq0km4hv"]
 
-[ext_resource type="Script" path="res://src/tree_positions/OverlayUI.cs" id="1_h0lcn"]
-[ext_resource type="Script" path="res://src/tree_positions/StatusUI.cs" id="2_bcpx8"]
-[ext_resource type="Script" path="res://src/ui/player_status/HealthBarUI.cs" id="3_ipbqe"]
-[ext_resource type="Script" path="res://src/ui/FPSDisplay.cs" id="3_noua2"]
-[ext_resource type="Script" path="res://src/ui/GameoverUI.cs" id="4_7cas4"]
-[ext_resource type="Resource" uid="uid://b4700tas0fn4y" path="res://ressources/statistics/stattypes/ship/Health.tres" id="4_7ucoc"]
-[ext_resource type="Script" path="res://src/tree_positions/PlayerShipStatusUI.cs" id="4_lvsxm"]
-[ext_resource type="PackedScene" uid="uid://chegoc342p75w" path="res://ressources/scenes/ui/heart_icon.tscn" id="5_0k4vb"]
-[ext_resource type="Script" path="res://src/ui/player_status/EffectDisplayUI.cs" id="6_f014p"]
-[ext_resource type="Script" path="res://src/ui/player_status/WeaponsListUI.cs" id="6_gdklx"]
-[ext_resource type="PackedScene" uid="uid://bbj3aql5vr81a" path="res://ressources/scenes/ui/weapon_staus_ui.tscn" id="7_trp6a"]
-[ext_resource type="PackedScene" uid="uid://duyasv57mmjel" path="res://ressources/scenes/ui/details_ui.tscn" id="12_1ht25"]
+[ext_resource type="Script" path="res://src/tree_positions/OverlayUI.cs" id="1_mb5hg"]
+[ext_resource type="Script" path="res://src/tree_positions/StatusUI.cs" id="2_678vy"]
+[ext_resource type="Script" path="res://src/ui/ingame/hud/HealthBarUI.cs" id="3_sxtig"]
+[ext_resource type="Resource" uid="uid://b4700tas0fn4y" path="res://ressources/statistics/stattypes/ship/Health.tres" id="4_reagl"]
+[ext_resource type="PackedScene" uid="uid://chegoc342p75w" path="res://ressources/scenes/ui/ingame/hud/heart_icon.tscn" id="5_yek6e"]
+[ext_resource type="Script" path="res://src/ui/EffectDisplayUI.cs" id="6_y8otq"]
+[ext_resource type="Script" path="res://src/ui/WeaponsListUI.cs" id="7_r8fqt"]
+[ext_resource type="PackedScene" uid="uid://bbj3aql5vr81a" path="res://ressources/scenes/ui/ingame/hud/weapon_staus_ui.tscn" id="8_7dx2t"]
+[ext_resource type="Script" path="res://src/ui/ingame/hud/GameoverUI.cs" id="9_3xdb3"]
+[ext_resource type="Script" path="res://src/tree_positions/PlayerShipStatusUI.cs" id="10_bp3rd"]
+[ext_resource type="PackedScene" uid="uid://duyasv57mmjel" path="res://ressources/scenes/ui/misc/details/details_ui.tscn" id="11_7j4nh"]
+[ext_resource type="PackedScene" uid="uid://dk7w7w2qqbtuj" path="res://ressources/scenes/ui/mainmenu/game_menu.tscn" id="12_mfi2k"]
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -28,7 +28,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_h0lcn")
+script = ExtResource("1_mb5hg")
 
 [node name="StatusUI" type="MarginContainer" parent="." node_paths=PackedStringArray("healthBar", "effectDisplay")]
 layout_mode = 1
@@ -41,7 +41,7 @@ theme_override_constants/margin_left = 100
 theme_override_constants/margin_top = 100
 theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 100
-script = ExtResource("2_bcpx8")
+script = ExtResource("2_678vy")
 healthBar = NodePath("Control/VBoxContainer/HealthBar")
 effectDisplay = NodePath("Control/VBoxContainer/EffectDisplayUI")
 
@@ -60,14 +60,14 @@ grow_horizontal = 0
 [node name="HealthBar" type="HBoxContainer" parent="StatusUI/Control/VBoxContainer"]
 layout_mode = 2
 alignment = 2
-script = ExtResource("3_ipbqe")
-statType = ExtResource("4_7ucoc")
-heartScene = ExtResource("5_0k4vb")
+script = ExtResource("3_sxtig")
+statType = ExtResource("4_reagl")
+heartScene = ExtResource("5_yek6e")
 
 [node name="EffectDisplayUI" type="RichTextLabel" parent="StatusUI/Control/VBoxContainer"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-script = ExtResource("6_f014p")
+script = ExtResource("6_y8otq")
 
 [node name="WeaponsList" type="HBoxContainer" parent="StatusUI/Control"]
 layout_mode = 1
@@ -77,18 +77,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
-script = ExtResource("6_gdklx")
-WeaponStatusUIScene = ExtResource("7_trp6a")
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 31.0
-offset_top = 20.0
-offset_right = 71.0
-offset_bottom = 43.0
-scale = Vector2(2.51003, 1.75862)
-text = "FPS: "
-script = ExtResource("3_noua2")
+script = ExtResource("7_r8fqt")
+WeaponStatusUIScene = ExtResource("8_7dx2t")
 
 [node name="GameoverLabel" type="Label" parent="."]
 visible = false
@@ -107,7 +97,7 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(0.958895, 0.20078, 0, 1)
 theme_override_font_sizes/font_size = 300
 text = "GAMEOVER"
-script = ExtResource("4_7cas4")
+script = ExtResource("9_3xdb3")
 
 [node name="PlayerShipStatusUI" type="Control" parent="."]
 layout_mode = 1
@@ -116,7 +106,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("4_lvsxm")
+script = ExtResource("10_bp3rd")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -133,6 +123,9 @@ theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 40
 
-[node name="DetailsUI" parent="PanelContainer/MarginContainer" instance=ExtResource("12_1ht25")]
+[node name="DetailsUI" parent="PanelContainer/MarginContainer" instance=ExtResource("11_7j4nh")]
 visible = false
 layout_mode = 2
+
+[node name="GameMenu" parent="." instance=ExtResource("12_mfi2k")]
+layout_mode = 1

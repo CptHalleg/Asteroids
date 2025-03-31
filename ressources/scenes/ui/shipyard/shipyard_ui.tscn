@@ -1,0 +1,79 @@
+[gd_scene load_steps=3 format=3 uid="uid://csire1xdoihpn"]
+
+[ext_resource type="Script" path="res://src/ui/HardpointListUI.cs" id="1_6stax"]
+[ext_resource type="PackedScene" uid="uid://cocdiipdxq5na" path="res://ressources/scenes/ui/shipyard/hardpoint_equip_ui.tscn" id="2_70ac7"]
+
+[node name="MarginContainer" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Control2" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control3" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control" type="Control" parent="HBoxContainer" node_paths=PackedStringArray("hardpointListRoot")]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("1_6stax")
+hardpoitEquipScene = ExtResource("2_70ac7")
+hardpointListRoot = NodePath("MarginContainer/ScrollContainer/MarginContainer/HardpointListUI")
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.252028, 0.252028, 0.252028, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/Control/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Control/MarginContainer/ScrollContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HardpointListUI" type="VBoxContainer" parent="HBoxContainer/Control/MarginContainer/ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="HBoxContainer/Control/MarginContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HardpointListUI" type="VBoxContainer" parent="HBoxContainer/Control/MarginContainer/ScrollContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3

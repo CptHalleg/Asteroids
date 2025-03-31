@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("1_lrpfc")
-Name = "ReloadTime"
+DisplayName = "Reload Time"
+Units = "s"

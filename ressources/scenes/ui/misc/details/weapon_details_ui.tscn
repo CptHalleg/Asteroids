@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bp1dhmudtqm4h"]
+[gd_scene load_steps=3 format=3 uid="uid://bve0r6j7muew6"]
 
-[ext_resource type="Script" path="res://src/ui/player_status/WeaponDetailsUi.cs" id="1_pawu4"]
-[ext_resource type="Script" path="res://src/ui/player_status/StatDisplayUI.cs" id="2_4g41n"]
+[ext_resource type="Script" path="res://src/ui/WeaponDetailsUI.cs" id="1_h6aoq"]
+[ext_resource type="Script" path="res://src/ui/StatDisplayUI.cs" id="2_je8ib"]
 
-[node name="WeaponDetailsUi" type="VBoxContainer" node_paths=PackedStringArray("nameDusplay", "statDisplay")]
+[node name="WeaponDetailsUI" type="VBoxContainer" node_paths=PackedStringArray("nameDusplay", "statDisplay")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("1_pawu4")
+script = ExtResource("1_h6aoq")
 nameDusplay = NodePath("Label")
 statDisplay = NodePath("RichTextLabel")
 
@@ -24,4 +24,4 @@ theme_override_font_sizes/font_size = 30
 layout_mode = 2
 size_flags_vertical = 3
 fit_content = true
-script = ExtResource("2_4g41n")
+script = ExtResource("2_je8ib")

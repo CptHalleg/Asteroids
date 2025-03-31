@@ -6,13 +6,12 @@ public partial class MagazinStatusUI : HFlowContainer
 {
 	[Export] private PackedScene bulletScene;
 	[Export] private StatType currentBulletCountStatType;
-	private WeaponStatusUI weaponStatusUI;
+	[Export] private WeaponStatusUI weaponStatusUI;
 
     public async override void _Ready()
     {
 		DebugTools.IsSet(bulletScene, this);
 		DebugTools.IsParentType(typeof(WeaponStatusUI),this);
-		weaponStatusUI = GetParent<WeaponStatusUI>();
 		weaponStatusUI.Weapon.Character.CharacterEventHandler.PostRegister<AmmoConsumedEvent>(OnAmmoConsumed);
 		weaponStatusUI.Weapon.Character.CharacterEventHandler.PostRegister<ReloadEvent>(OnReload);
 		

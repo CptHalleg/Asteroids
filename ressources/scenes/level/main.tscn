@@ -1,0 +1,56 @@
+[gd_scene load_steps=8 format=3 uid="uid://2upjphuqt4ut"]
+
+[ext_resource type="PackedScene" uid="uid://dsiorb8lgr4l1" path="res://ressources/scenes/ui/mainmenu/main_menu.tscn" id="1_052yd"]
+[ext_resource type="Script" path="res://src/tools/SceneManager.cs" id="1_hcgr5"]
+[ext_resource type="Shader" path="res://src/shaders/test.gdshader" id="2_w6qxm"]
+[ext_resource type="PackedScene" uid="uid://qt2754bnd3a7" path="res://ressources/scenes/ui/misc/mouse_coursor.tscn" id="4_cbyni"]
+[ext_resource type="Script" path="res://src/tools/FullscreenManager.cs" id="5_7l46p"]
+[ext_resource type="Script" path="res://src/ui/misc/FPSDisplay.cs" id="5_i15q8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sdtk1"]
+shader = ExtResource("2_w6qxm")
+
+[node name="Main" type="Node"]
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("1_hcgr5")
+mainMenu = ExtResource("1_052yd")
+
+[node name="MainMenu" parent="Node" instance=ExtResource("1_052yd")]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="."]
+volume_db = -10.0
+autoplay = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_sdtk1")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="MouseCoursor" parent="CanvasLayer2" instance=ExtResource("4_cbyni")]
+
+[node name="Label" type="Label" parent="CanvasLayer2"]
+offset_left = 31.0
+offset_top = 20.0
+offset_right = 71.0
+offset_bottom = 43.0
+scale = Vector2(2.51003, 1.75862)
+text = "FPS: "
+script = ExtResource("5_i15q8")
+
+[node name="FullscreenManager" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("5_7l46p")
+
+[connection signal="finished" from="AudioStreamPlayer2D" to="AudioStreamPlayer2D" method="play" binds= [0.0]]

@@ -6,4 +6,5 @@
 [resource]
 script = ExtResource("2_fdywv")
 maxType = ExtResource("1_v2vdc")
-Name = "Health"
+DisplayName = "Health"
+Units = ""

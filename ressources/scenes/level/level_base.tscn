@@ -1,0 +1,207 @@
+[gd_scene load_steps=24 format=3 uid="uid://cwfeil2tequuf"]
+
+[ext_resource type="PackedScene" uid="uid://dpn6ty8sleodq" path="res://ressources/scenes/level/test.tscn" id="1_dd86a"]
+[ext_resource type="Texture2D" uid="uid://bkhd4v74fhsqr" path="res://test.png" id="2_cxw6j"]
+[ext_resource type="Script" path="res://src/player/FollowCamera.cs" id="3_7b7nf"]
+[ext_resource type="Script" path="res://src/player/CameraZoom.cs" id="4_lu6ka"]
+[ext_resource type="Script" path="res://src/ui/FireingArcVisibilityToggle.cs" id="5_x8s2s"]
+[ext_resource type="Script" path="res://src/player/CameraVisibilityArea.cs" id="6_so86r"]
+[ext_resource type="Script" path="res://src/tree_positions/OverlayUI.cs" id="7_wuo6x"]
+[ext_resource type="Script" path="res://src/tree_positions/StatusUI.cs" id="8_04oxm"]
+[ext_resource type="Script" path="res://src/ui/ingame/hud/HealthBarUI.cs" id="9_pfpb6"]
+[ext_resource type="Resource" uid="uid://b4700tas0fn4y" path="res://ressources/statistics/stattypes/ship/Health.tres" id="10_ttqvp"]
+[ext_resource type="PackedScene" uid="uid://chegoc342p75w" path="res://ressources/scenes/ui/ingame/hud/heart_icon.tscn" id="11_ny886"]
+[ext_resource type="Script" path="res://src/ui/EffectDisplayUI.cs" id="12_jwjm1"]
+[ext_resource type="Script" path="res://src/ui/WeaponsListUI.cs" id="13_jk5jg"]
+[ext_resource type="PackedScene" uid="uid://bbj3aql5vr81a" path="res://ressources/scenes/ui/ingame/hud/weapon_staus_ui.tscn" id="14_fkw8f"]
+[ext_resource type="Script" path="res://src/ui/ingame/hud/GameoverUI.cs" id="15_mn8w7"]
+[ext_resource type="Script" path="res://src/tree_positions/PlayerShipStatusUI.cs" id="16_88pqp"]
+[ext_resource type="PackedScene" uid="uid://duyasv57mmjel" path="res://ressources/scenes/ui/misc/details/details_ui.tscn" id="17_3gldu"]
+[ext_resource type="PackedScene" uid="uid://dk7w7w2qqbtuj" path="res://ressources/scenes/ui/mainmenu/game_menu.tscn" id="18_2i6ld"]
+[ext_resource type="Script" path="res://src/objects/SimpleRigidbody2D.cs" id="19_a6fjc"]
+[ext_resource type="Script" path="res://src/components/area/CopyCollisionPolygon2D.cs" id="20_nnxik"]
+[ext_resource type="Script" path="res://src/components/team/TeamPolygon2D.cs" id="21_v6oxq"]
+[ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="22_2nm0f"]
+
+[sub_resource type="Environment" id="Environment_qiabr"]
+background_mode = 3
+tonemap_white = 6.05
+glow_enabled = true
+glow_intensity = 2.32
+glow_bloom = 1.0
+
+[node name="LevelBase" type="Node2D"]
+
+[node name="Node2D" parent="." instance=ExtResource("1_dd86a")]
+
+[node name="LevelRoot" type="Node2D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_qiabr")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+process_mode = 3
+zoom = Vector2(0.5, 0.5)
+script = ExtResource("3_7b7nf")
+MovementScale = 0.8
+
+[node name="CameraZoom" type="Node" parent="Camera2D"]
+script = ExtResource("4_lu6ka")
+
+[node name="FireingArcVisibilityToggle" type="Node" parent="Camera2D"]
+script = ExtResource("5_x8s2s")
+
+[node name="Area2D" type="Area2D" parent="Camera2D"]
+collision_layer = 16777216
+collision_mask = 0
+script = ExtResource("6_so86r")
+
+[node name="BackgroundCamera" type="Camera2D" parent="."]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(10000, 10000)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+rotation = 0.785398
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("2_cxw6j")
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="UI" type="Control" parent="CanvasLayer2"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="3DUIOverlay" type="Control" parent="CanvasLayer2/UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_wuo6x")
+
+[node name="StatusUI" type="MarginContainer" parent="CanvasLayer2/UI" node_paths=PackedStringArray("healthBar", "effectDisplay")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+script = ExtResource("8_04oxm")
+healthBar = NodePath("Control/VBoxContainer/HealthBar")
+effectDisplay = NodePath("Control/VBoxContainer/EffectDisplayUI")
+
+[node name="Control" type="Control" parent="CanvasLayer2/UI/StatusUI"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2/UI/StatusUI/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1.0
+offset_bottom = 27.0
+grow_horizontal = 0
+
+[node name="HealthBar" type="HBoxContainer" parent="CanvasLayer2/UI/StatusUI/Control/VBoxContainer"]
+layout_mode = 2
+alignment = 2
+script = ExtResource("9_pfpb6")
+statType = ExtResource("10_ttqvp")
+heartScene = ExtResource("11_ny886")
+
+[node name="EffectDisplayUI" type="RichTextLabel" parent="CanvasLayer2/UI/StatusUI/Control/VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+script = ExtResource("12_jwjm1")
+
+[node name="WeaponsList" type="HBoxContainer" parent="CanvasLayer2/UI/StatusUI/Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("13_jk5jg")
+WeaponStatusUIScene = ExtResource("14_fkw8f")
+
+[node name="GameoverLabel" type="Label" parent="CanvasLayer2/UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -821.0
+offset_top = -204.5
+offset_right = 821.0
+offset_bottom = 204.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.958895, 0.20078, 0, 1)
+theme_override_font_sizes/font_size = 300
+text = "GAMEOVER"
+script = ExtResource("15_mn8w7")
+
+[node name="PlayerShipStatusUI" type="Control" parent="CanvasLayer2/UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("16_88pqp")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer2/UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2/UI/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="DetailsUI" parent="CanvasLayer2/UI/PanelContainer/MarginContainer" instance=ExtResource("17_3gldu")]
+visible = false
+layout_mode = 2
+
+[node name="GameMenu" parent="CanvasLayer2/UI" instance=ExtResource("18_2i6ld")]
+layout_mode = 1
+
+[node name="Node2D2" type="Node2D" parent="."]
+script = ExtResource("19_a6fjc")
+RotationSpeed = 1.0
+
+[node name="Polygon2D" type="Polygon2D" parent="Node2D2"]
+polygon = PackedVector2Array(188, -89, 291, 78, 427, 125, 427, 230, 224, 233, 184, 322, 160, 438, 31, 456, -72, 440, -206, 394, -266, 310, -261, 223, -181, 281, -231, 180, -232, 110, -316, 39, -316, -27, -393, -18, -380, -112, -265, -148, -167, -194, -13, -157, 111, -175, 250, -182)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Node2D2" node_paths=PackedStringArray("Polygon2D")]
+script = ExtResource("20_nnxik")
+Polygon2D = NodePath("../Polygon2D")
+
+[node name="TeamPolygon2D" type="Polygon2D" parent="Node2D2/CollisionPolygon2D" node_paths=PackedStringArray("TeamMarker")]
+script = ExtResource("21_v6oxq")
+TeamMarker = NodePath("../../TeamMarker")
+
+[node name="TeamMarker" type="Node" parent="Node2D2"]
+script = ExtResource("22_2nm0f")

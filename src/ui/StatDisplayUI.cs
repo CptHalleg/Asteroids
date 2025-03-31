@@ -15,7 +15,7 @@ public partial class StatDisplayUI : RichTextLabel
         string str = "";
 
 		foreach(var pair in Character.StatBlock.GetValues()){
-			str += pair.Key.Name + ": " + pair.Value.GetValue() + "\n";
+			str += pair.Value.GetDescription()+ "\n";
 		}
 
 		Text = str;

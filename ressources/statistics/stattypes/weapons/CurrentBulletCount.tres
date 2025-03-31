@@ -6,4 +6,5 @@
 [resource]
 script = ExtResource("1_sg1mk")
 maxType = ExtResource("1_4sf5w")
-Name = "CurrentBulletCount"
+DisplayName = "Current Bullet Count"
+Units = "b"

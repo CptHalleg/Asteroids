@@ -1,17 +1,15 @@
 using Godot;
 using System;
 
-public partial class TeamMakerLabel : Label
+public partial class Shipyard : Node
 {
-	private TeamMarker TeamMarker;
+	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		TeamMarker = GetParent<TeamMarker>();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		Text = TeamMarker.Team.ToString();
 	}
 }

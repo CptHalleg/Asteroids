@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://beqnhbocee3lv"]
 
-[ext_resource type="Script" path="res://src/ui/OffscreenHint.cs" id="1_k8d6q"]
+[ext_resource type="Script" path="res://src/ui/ingame/hud/OffscreenHint.cs" id="1_k8d6q"]
 [ext_resource type="Script" path="res://src/ui/MySubViewport.cs" id="2_tt5m6"]
 [ext_resource type="Script" path="res://src/player/FollowCamera.cs" id="3_yn0dx"]
 
