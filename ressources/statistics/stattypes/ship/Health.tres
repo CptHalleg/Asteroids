@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CappedStatType" load_steps=3 format=3 uid="uid://b4700tas0fn4y"]
 
 [ext_resource type="Resource" uid="uid://cyjgjw00sueqc" path="res://ressources/statistics/stattypes/ship/MaxHealth.tres" id="1_v2vdc"]
-[ext_resource type="Script" path="res://src/character/stats/stattypes/CappedStatType.cs" id="2_fdywv"]
+[ext_resource type="Script" path="res://GodotTools/character/stats/stattypes/CappedStatType.cs" id="2_fdywv"]
 
 [resource]
 script = ExtResource("2_fdywv")

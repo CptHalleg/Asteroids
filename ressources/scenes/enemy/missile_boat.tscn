@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/ship/Ship.cs" id="1_6emyc"]
 [ext_resource type="PackedScene" uid="uid://unrv33h86xxb" path="res://ressources/scenes/player/weapons/torpedo_launcher.tscn" id="1_kbi28"]
 [ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="2_n7irk"]
-[ext_resource type="Script" path="res://src/character/Character.cs" id="3_ck6ly"]
+[ext_resource type="Script" path="res://GodotTools/character/Character.cs" id="3_ck6ly"]
 [ext_resource type="Resource" uid="uid://uijcwwhf7i3k" path="res://ressources/statistics/basestatlists/ship_basestats.tres" id="4_y6ac1"]
 [ext_resource type="Script" path="res://src/ship/shipComponents/WeaponHardpoint.cs" id="5_n6o7k"]
 [ext_resource type="Script" path="res://src/components/area/DamagableArea.cs" id="7_p5p5t"]

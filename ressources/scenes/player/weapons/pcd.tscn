@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/ship/weapon/Weapon.cs" id="1_e3wpw"]
 [ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="2_orfc6"]
-[ext_resource type="Script" path="res://src/character/Character.cs" id="3_5e2x6"]
+[ext_resource type="Script" path="res://GodotTools/character/Character.cs" id="3_5e2x6"]
 [ext_resource type="Script" path="res://src/ship/weapon/weaponComponents/TargetPickerWeaponComponent.cs" id="3_f16kc"]
 [ext_resource type="Script" path="res://src/ship/weapon/weaponComponents/attachments/TargetPickerVisualizer.cs" id="4_4bdwk"]
 [ext_resource type="Resource" uid="uid://db0arp6rkojr5" path="res://ressources/statistics/basestatlists/pdc_basestats.tres" id="4_my3vb"]

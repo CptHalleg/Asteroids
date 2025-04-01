@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="StatList" load_steps=8 format=3 uid="uid://bcnic23kgq0pi"]
 
-[ext_resource type="Script" path="res://src/character/stats/StatList.cs" id="1_tyc6i"]
+[ext_resource type="Script" path="res://GodotTools/character/stats/StatList.cs" id="1_tyc6i"]
 [ext_resource type="Resource" uid="uid://c7t7lmdocdugk" path="res://ressources/statistics/stattypes/ship/BaseMaxHealth.tres" id="2_0pvrv"]
 [ext_resource type="Resource" uid="uid://cyjgjw00sueqc" path="res://ressources/statistics/stattypes/ship/MaxHealth.tres" id="3_biuqu"]
 [ext_resource type="Resource" uid="uid://b4700tas0fn4y" path="res://ressources/statistics/stattypes/ship/Health.tres" id="4_bekvw"]

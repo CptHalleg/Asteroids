@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/ship/weapon/Weapon.cs" id="1_lh5kj"]
 [ext_resource type="Script" path="res://src/components/team/TeamMarker.cs" id="2_tqb78"]
 [ext_resource type="Script" path="res://src/ship/weapon/weaponComponents/TargetPickerWeaponComponent.cs" id="3_4472o"]
-[ext_resource type="Script" path="res://src/character/Character.cs" id="3_vfjc2"]
+[ext_resource type="Script" path="res://GodotTools/character/Character.cs" id="3_vfjc2"]
 [ext_resource type="PackedScene" uid="uid://cf7dxqh23ewty" path="res://ressources/scenes/projectiles/torpedo.tscn" id="4_41xxs"]
 [ext_resource type="Resource" uid="uid://dnav367dhn5mr" path="res://ressources/statistics/basestatlists/torpedo_laucher_basestats.tres" id="4_jnt5w"]
 [ext_resource type="Script" path="res://src/ship/weapon/weaponComponents/attachments/TargetPickerVisualizer.cs" id="4_vcmax"]

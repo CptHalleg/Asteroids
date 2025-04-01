@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="BaseStatList" load_steps=10 format=3 uid="uid://dnav367dhn5mr"]
 
 [ext_resource type="Resource" uid="uid://cc0ipoyprn5xg" path="res://ressources/statistics/statlists/weapon_stats.tres" id="1_3muvw"]
-[ext_resource type="Script" path="res://src/character/stats/BaseStatList.cs" id="1_dmaba"]
+[ext_resource type="Script" path="res://GodotTools/character/stats/BaseStatList.cs" id="1_dmaba"]
 [ext_resource type="Resource" uid="uid://dayv8fuav1q5j" path="res://ressources/statistics/stattypes/weapons/MaxBulletCount.tres" id="2_4h1o5"]
-[ext_resource type="Script" path="res://src/character/stats/BaseStatValue.cs" id="3_hxaxv"]
+[ext_resource type="Script" path="res://GodotTools/character/stats/BaseStatValue.cs" id="3_hxaxv"]
 [ext_resource type="Resource" uid="uid://bf6hf0nhvpqll" path="res://ressources/statistics/stattypes/weapons/ReloadTime.tres" id="4_vmc5i"]
 [ext_resource type="Resource" uid="uid://dbfjqb3lhqohm" path="res://ressources/statistics/stattypes/weapons/FireRate.tres" id="5_htcnx"]
 

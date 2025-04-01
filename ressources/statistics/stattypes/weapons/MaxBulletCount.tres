@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AddAttributeStatType" load_steps=2 format=3 uid="uid://dayv8fuav1q5j"]
 
-[ext_resource type="Script" path="res://src/character/stats/stattypes/AddAttributeStatType.cs" id="1_csgxc"]
+[ext_resource type="Script" path="res://GodotTools/character/stats/stattypes/AddAttributeStatType.cs" id="1_csgxc"]
 
 [resource]
 script = ExtResource("1_csgxc")

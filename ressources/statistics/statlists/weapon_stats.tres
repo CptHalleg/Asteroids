@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="StatList" load_steps=6 format=3 uid="uid://cc0ipoyprn5xg"]
 
-[ext_resource type="Script" path="res://src/character/stats/StatList.cs" id="1_5ppoo"]
+[ext_resource type="Script" path="res://GodotTools/character/stats/StatList.cs" id="1_5ppoo"]
 [ext_resource type="Resource" uid="uid://dayv8fuav1q5j" path="res://ressources/statistics/stattypes/weapons/MaxBulletCount.tres" id="2_x8x60"]
 [ext_resource type="Resource" uid="uid://dfv5cm6c6gxdn" path="res://ressources/statistics/stattypes/weapons/CurrentBulletCount.tres" id="3_febkr"]
 [ext_resource type="Resource" uid="uid://bf6hf0nhvpqll" path="res://ressources/statistics/stattypes/weapons/ReloadTime.tres" id="4_w27ve"]
